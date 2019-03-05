@@ -1,3 +1,18 @@
 [submodule "lib/libft"]
 	path = lib/libft
 	url = https://github.com/galacticgargleblaster/libft/
+[submodule "prior_art/pbondoer"]
+	path = prior_art/pbondoer
+	url = https://github.com/pbondoer/42-fillit
+[submodule "prior_art/giacomoguiulfo"]
+	path = prior_art/giacomoguiulfo
+	url = https://github.com/giacomoguiulfo/42-fillit
+[submodule "prior_art/alexisadorn"]
+	path = prior_art/alexisadorn
+	url = https://github.com/alexisadorn/42-fillit
+[submodule "prior_art/wickedpool"]
+	path = prior_art/wickedpool
+	url = https://github.com/wickedpool/Fillit-42
+[submodule "prior_art/nmei"]
+	path = prior_art/nmei
+	url = https://github.com/nmei-42/42-fillit
