@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <fcntl.h>
 
 /*
 **  https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
@@ -28,42 +29,80 @@
 #define X(idx) (MIN(X_RAW(idx), TETROMINO_BOUNDING_SIZE - 1))
 #define IS_VALID_CHR(c) (ft_strchr(".#\n", c ))
 
-char**	parse_tetronimo(int fd)
+/*
+**	Allocates and initializes memory to store the shape of a tetromino
+*/
+char	**new_shape()
 {
-	char	*buf[TETROMINO_FORMAT_N_BYTES];
-	int		read_returned;
+	char	**shape;
+	size_t	row;
+
+	if ((shape = malloc(sizeof(char*) * TETROMINO_BOUNDING_SIZE)) == NULL)
+		ERROR(NULL, "malloc failed");
+	row = 0;
+	while (row < TETROMINO_BOUNDING_SIZE)
+	{
+		if ((shape[row] = malloc(sizeof(char) * TETROMINO_BOUNDING_SIZE)) == NULL)
+			ERROR(NULL, "malloc failed");
+		ft_bzero(shape[row], TETROMINO_BOUNDING_SIZE);
+		row++;
+	}	
+	return (shape);
+}
+
+/*
+**	Transforms a string containing what may be a tetromino into a 4x4 char array
+**	Returns the char array, or
+**	Returns NULL if an error occurs
+*/
+char	**parse_tetromino(char *buf)
+{
 	char	**shape;
 	int		idx;
+
+	idx = 0;
+	if ((shape = new_shape()) == NULL)
+		ERROR(NULL, "can't get new shape");
+	while (idx < TETROMINO_FORMAT_N_BYTES - 1)
+	{
+		if (NOT(IS_VALID_CHR(buf[idx])))
+			ERROR(NULL, ft_strjoin("Encountered invalid char: ", ft_strndup(&buf[idx], 1)));
+		if (idx % 5 == 0)
+		{
+			if (buf[idx] != '\n')
+				ERROR(NULL, "newline found in wrong position");	
+		}
+		else
+		{
+			if (buf[idx] == '\n')
+				ERROR(NULL, "newline found in wrong position");	
+			shape[Y(idx)][X(idx)] = buf[idx];
+		}
+		idx++;
+	}
+	if (buf[idx] != '\n')
+		ERROR(NULL, "trailing newline is missing");
+	return (shape);
+}
+
+char	**get_next_tetromino_from_fd(int fd)
+{
+	char	*buf[TETROMINO_FORMAT_N_BYTES];
 
 	ft_bzero(buf, TETROMINO_FORMAT_N_BYTES);
 	if ((read(fd, buf, TETROMINO_FORMAT_N_BYTES)) != TETROMINO_FORMAT_N_BYTES)
 		ERROR(NULL, "read() failed");
-	shape = malloc(sizeof(char) * TETROMINO_BOUNDING_SIZE * TETROMINO_BOUNDING_SIZE);
-	idx = 0;
-	while (idx < TETROMINO_FORMAT_N_BYTES)
-	{
-		if (NOT(IS_VALID_CHR(buf[idx])))
-			ERROR(NULL, ft_strjoin("Encountered invalid char: ", ft_strndup(&buf[idx], 1)));
-		if (buf[idx] == '\n')
-			
-		
-	}
+	return (parse_tetromino(buf[0]));
 }
 
 
-int main()
+int main(int ac, char **av)
 {
-	struct s_tetromino *tetromino = malloc(sizeof(struct s_tetromino));
-	tetromino->shape = [['#','.','.','.'],
-						['#','.','.','.'],
-						['#','.','.','.'],
-						['#','.','.','.']];
-	tetromino->x_pos = 0;
-	tetromino->y_pos = 0;
-	ft_putstr(CYAN);
-	ft_putstr("HMM\n");
-	ft_putstr(MAGENTA);
-	ft_putstr("GORGEOUS\n");
+	int fd = open(av[1], O_RDONLY);
+	char **tet = get_next_tetromino_from_fd(fd);
+
+	(void)ac;
+	(void)tet;
 	return (0);
 }
 
