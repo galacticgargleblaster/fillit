@@ -23,10 +23,9 @@
 #define TETROMINO_FORMAT_N_BYTES 21
 
 #define ERROR(ret, msg)({ PUTERR(msg); return (ret); })
-#define Y_RAW(idx) (idx / (TETROMINO_BOUNDING_SIZE + 1))
-#define X_RAW(idx) (idx % (TETROMINO_BOUNDING_SIZE + 1))
-#define Y(idx) (MIN(Y_RAW(idx), TETROMINO_BOUNDING_SIZE - 1))
-#define X(idx) (MIN(X_RAW(idx), TETROMINO_BOUNDING_SIZE - 1))
+#define T_BOUND_SIZE 4
+#define Y(idx) (idx / (T_BOUND_SIZE + 1))
+#define X(idx) (idx % (T_BOUND_SIZE + 1))
 #define IS_VALID_CHR(c) (ft_strchr(".#\n", c ))
 
 /*
@@ -37,14 +36,14 @@ char	**new_shape()
 	char	**shape;
 	size_t	row;
 
-	if ((shape = malloc(sizeof(char*) * TETROMINO_BOUNDING_SIZE)) == NULL)
+	if ((shape = malloc(sizeof(char*) * T_BOUND_SIZE)) == NULL)
 		ERROR(NULL, "malloc failed");
 	row = 0;
-	while (row < TETROMINO_BOUNDING_SIZE)
+	while (row < T_BOUND_SIZE)
 	{
-		if ((shape[row] = malloc(sizeof(char) * TETROMINO_BOUNDING_SIZE)) == NULL)
+		if ((shape[row] = malloc(sizeof(char) * T_BOUND_SIZE)) == NULL)
 			ERROR(NULL, "malloc failed");
-		ft_bzero(shape[row], TETROMINO_BOUNDING_SIZE);
+		ft_bzero(shape[row], T_BOUND_SIZE);
 		row++;
 	}	
 	return (shape);
@@ -55,6 +54,7 @@ char	**new_shape()
 **	Returns the char array, or
 **	Returns NULL if an error occurs
 */
+#define IS_END_OF_LINE(idx) (idx % 5 == 4)
 char	**parse_tetromino(char *buf)
 {
 	char	**shape;
@@ -67,10 +67,10 @@ char	**parse_tetromino(char *buf)
 	{
 		if (NOT(IS_VALID_CHR(buf[idx])))
 			ERROR(NULL, ft_strjoin("Encountered invalid char: ", ft_strndup(&buf[idx], 1)));
-		if (idx % 5 == 0)
+		if (IS_END_OF_LINE(idx))
 		{
 			if (buf[idx] != '\n')
-				ERROR(NULL, "newline found in wrong position");	
+			ERROR(NULL, ft_strjoin("no newline found at x index 4 of row: ", ft_itoa(Y(idx))));
 		}
 		else
 		{
@@ -87,12 +87,12 @@ char	**parse_tetromino(char *buf)
 
 char	**get_next_tetromino_from_fd(int fd)
 {
-	char	*buf[TETROMINO_FORMAT_N_BYTES];
+	char	buf[TETROMINO_FORMAT_N_BYTES];
 
 	ft_bzero(buf, TETROMINO_FORMAT_N_BYTES);
 	if ((read(fd, buf, TETROMINO_FORMAT_N_BYTES)) != TETROMINO_FORMAT_N_BYTES)
 		ERROR(NULL, "read() failed");
-	return (parse_tetromino(buf[0]));
+	return (parse_tetromino(buf));
 }
 
 
