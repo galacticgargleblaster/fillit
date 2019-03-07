@@ -5,7 +5,8 @@
 #define PUTERR(msg)
 #endif
 
-#define TETROMINO_BOUNDING_SIZE 4
+typedef	char t_shape[4][4];
+
 
 struct		s_tetromino
 {
@@ -13,6 +14,9 @@ struct		s_tetromino
 	size_t	x_pos;
 	size_t	y_pos;
 	
-};
+};	
+
+typedef struct s_tetromino t_tetromino;
+
 
 
