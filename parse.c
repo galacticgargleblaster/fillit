@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/07 15:37:21 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/08 12:32:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,7 @@
 
 #define Y(idx) (idx / (T_BOUND_SIZE + 1))
 #define X(idx) (idx % (T_BOUND_SIZE + 1))
-#define IS_VALID_TETROMINO_CHR(c) (ft_strchr(".#", c ))
-
-/*
-**	Allocates and initializes memory to store the shape of a tetromino
-*/
-
-static t_shape	*new_shape(void)
-{
-	t_shape *shape;
-	size_t	row;
-
-	if (((shape = malloc(sizeof(t_shape)))) == NULL)
-		RETURN(NULL, "malloc failed");
-	row = 0;
-	while (row < T_BOUND_SIZE)
-	{
-		ft_bzero((*shape)[row], T_BOUND_SIZE);
-		row++;
-	}
-	return (shape);
-}
+#define IS_VALID_TETROMINO_CHR(c) ((c == EMPTY) || (c == FILLED))
 
 /*
 **	If there are exactly four shaded regions, and if every shaded region
@@ -93,11 +73,12 @@ static int		parse_shape(char *buf, t_shape **shape_ptr)
 
 static int		get_next_tetromino_from_fd(int fd, t_list **tet_list)
 {
-	char	buf[TETROMINO_FORMAT_N_BYTES];
-	char	c;
-	t_shape *shape;
-	t_shape	**shape_ptr;
-	ssize_t read_returned;
+	char		buf[TETROMINO_FORMAT_N_BYTES];
+	char		c;
+	t_shape		*shape;
+	t_shape		**shape_ptr;
+	ssize_t		read_returned;
+	t_tetromino *new_tet;
 
 	ft_bzero(buf, TETROMINO_FORMAT_N_BYTES);
 	read_returned = read(fd, buf, TETROMINO_FORMAT_N_BYTES);
@@ -113,7 +94,9 @@ static int		get_next_tetromino_from_fd(int fd, t_list **tet_list)
 		return (READ_ERROR);
 	else if (*shape_ptr == NULL)
 		return (READ_COMPLETE);
-	ft_lstadd(tet_list, ft_lstnewlink(*shape_ptr));
+	if ((new_tet = new_tetromino(*shape_ptr)) == NULL)
+		return (READ_ERROR);
+	ft_lstadd(tet_list, ft_lstnewlink(new_tet));
 	return (READ_OK);
 }
 

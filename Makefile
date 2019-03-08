@@ -9,7 +9,7 @@ LIBFT_DIR = ./lib/libft
 INCLUDES = $(LIBFT_DIR) $(SOURCE_DIR)
 CC = clang
 CPP = clang -E
-CFLAGS = -Wall -Werror -Wextra -I$(foreach d, $(INCLUDES), -I$d)
+CFLAGS = -Wall -Werror -Wextra $(foreach d, $(INCLUDES), -I$d)
 
 # ------------------------------------------------------------------------------#
 # This method of directory creation is adapted from:
