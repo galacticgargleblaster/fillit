@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/08 12:32:52 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/08 15:52:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static int		parse_shape(char *buf, t_shape **shape_ptr)
 			RETURN(PARSE_ERROR, "no newline found at row end");
 		else if (IS_VALID_TETROMINO_CHR(buf[idx]))
 			(*shape)[Y(idx)][X(idx)] = buf[idx];
+		else if (IS_END_OF_LINE(idx) && buf[idx] == '\n')
+			;
 		else
 			RETURN(PARSE_ERROR, "invalid char within shape");
 	}
@@ -96,7 +98,7 @@ static int		get_next_tetromino_from_fd(int fd, t_list **tet_list)
 		return (READ_COMPLETE);
 	if ((new_tet = new_tetromino(*shape_ptr)) == NULL)
 		return (READ_ERROR);
-	ft_lstadd(tet_list, ft_lstnewlink(new_tet));
+	ft_lstaddback(tet_list, ft_lstnewlink(new_tet));
 	return (READ_OK);
 }
 

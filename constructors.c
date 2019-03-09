@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/08 13:44:14 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/08 16:26:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,20 @@ t_shape	*new_shape(void)
 }
 
 /*
+**	A tetromino's position within a shape is underconstrained.  We can
+**	maybe? save some searching time by caching the relative position
+**	of a tetromino within a 4x4 space.
 **	
+**	#...	...#	
+**	#...	...#	
+**	#...	...#	
+**	#...	...#	
+**
+**	This function calculates and caches the position of the tetromino
+**	within the shape.
+**	
+**	And it's almost certainly premature optimization, the bane of all
+**	software projects
 */
 
 static void	init_tet_min_max(t_tetromino *tet)
@@ -41,13 +54,13 @@ static void	init_tet_min_max(t_tetromino *tet)
 	tet->x_max = 0;
 	tet->y_min = T_BOUND_SIZE;
 	tet->y_max = 0;
-	x = -1;
 	y = -1;
-	while (++x < T_BOUND_SIZE)
+	while (++y < T_BOUND_SIZE)
 	{
-		while (++y < T_BOUND_SIZE)
+		x = -1;
+		while (++x < T_BOUND_SIZE)
 		{
-			if (*(tet->shape)[x][y] == FILLED)
+			if ((*tet->shape)[y][x] == FILLED)
 			{
 				tet->x_min = MIN(tet->x_min, x);
 				tet->x_max = MAX(tet->x_max, x);
@@ -58,9 +71,10 @@ static void	init_tet_min_max(t_tetromino *tet)
 	}
 }
 
+static unsigned char	g_label = 0;
+
 t_tetromino	*new_tetromino(t_shape* shape)
 {
-	static unsigned char	label;
 	t_tetromino				*tet;
 
 	tet = malloc(sizeof(t_tetromino));
@@ -70,7 +84,8 @@ t_tetromino	*new_tetromino(t_shape* shape)
 	tet->coord.x = 0;
 	tet->coord.y = 0;
 	init_tet_min_max(tet);
-	tet->label = 'A' + label;
+	tet->label = 'A' + g_label;
+	g_label++;
 	return (tet);
 }
 
@@ -85,7 +100,7 @@ t_board		*new_board(void)
 	row = 0;
 	while (row < MAX_BOARD_SIDELENGTH)
 	{
-		ft_memset(*board[row], EMPTY, MAX_BOARD_SIDELENGTH);
+		ft_memset((*board)[row], EMPTY, MAX_BOARD_SIDELENGTH);
 		row++;
 	}
 	return (board);
