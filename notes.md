@@ -1,4 +1,9 @@
 
+We're interested in what other folks have done before
+to checkout prior art submodules:
+`git submodule init`
+`git submodule update`
+
 https://github.com/nmei-42/42-fillit
 
 cites
