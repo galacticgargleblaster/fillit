@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/12 00:17:37 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/12 13:52:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,56 @@
 **	
 */
 
-#define LEFT_EDGE(tet) (tet->coord.x + tet->x_min)
-#define RIGHT_EDGE(tet) (tet->coord.x + tet->x_max)
-#define TOP_EDGE(tet) (tet->coord.y + tet->y_min)
-#define BOTTOM_EDGE(tet) (tet->coord.y + tet->y_max)
+static char left_edge(t_tetromino *t)
+{
+	return ((t->coord.x) + (t->x_min));
+}
+
+static char right_edge(t_tetromino *t)
+{
+	return ((t->coord.x) + (t->x_max));
+}
+
+static char top_edge(t_tetromino *t)
+{
+	return ((t->coord.y) + (t->y_min));
+}
+
+static char bottom_edge(t_tetromino *t)
+{
+	return ((t->coord.y) + (t->y_max));
+}
+
+/*
+**          TOP
+**          EDGE
+**          (y==1)
+**
+**        	....
+**   LEFT  	##..   RIGHT
+**   EDGE  	.#..   EDGE 
+**  (x==0)	.#..  (x==1)
+**
+**          BOTTOM
+**          EDGE 
+**          (y==3)
+*/
 
 int		intersects_with(t_tetromino *a, t_tetromino *b)
 {
 	unsigned char	x;
 	unsigned char	y;
 
-	if (LEFT_EDGE(b) > RIGHT_EDGE(a) || RIGHT_EDGE(b) < LEFT_EDGE(a) ||
-		BOTTOM_EDGE(b) > TOP_EDGE(a) || TOP_EDGE(b) < BOTTOM_EDGE(a))
+	if ((left_edge(b) > right_edge(a)) || (right_edge(b) < left_edge(a)) ||
+		(top_edge(b) > bottom_edge(a)) || (bottom_edge(b) < top_edge(a)))
 		return (0);
 	else
 	{
-		y = MAX(BOTTOM_EDGE(a), BOTTOM_EDGE(b));
-		while (y < MIN(TOP_EDGE(a), TOP_EDGE(b)))
+		y = MAX(top_edge(a), top_edge(b));
+		while (y < MIN(bottom_edge(a), bottom_edge(b)))
 		{
-			x = MAX(LEFT_EDGE(a), LEFT_EDGE(b));
-			while (x < MIN(LEFT_EDGE(a), LEFT_EDGE(b)))
+			x = MAX(left_edge(a), left_edge(b));
+			while (x < MIN(right_edge(a), right_edge(b)))
 			{
 				if (((*a->shape)[y - a->coord.y][x - a->coord.x] == FILLED) &&
 					((*b->shape)[y - b->coord.y][x - b->coord.x] == FILLED))

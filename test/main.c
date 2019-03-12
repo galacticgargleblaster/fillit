@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/12 00:39:09 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/12 00:55:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,18 @@
 
 #define ASSERT(cond) (\
 	{\
-		int result = cond;\
-		if (!result)\
+		int assertion_failed = ((cond) == 0);\
+		if (assertion_failed)\
 		{\
+			ft_putstr("condition: `");\
 			ft_putstr(#cond);\
-			ft_putstr(" failed\n");\
+			ft_putstr("` is untrue. (");\
 			ft_putstr(__FILE__);\
-			ft_putstr("\n");\
+			ft_putstr(", line ");\
 			ft_putstr(ft_itoa(__LINE__));\
-			ft_putstr("\n");\
+			ft_putstr(") ");\
 		}\
-		result;\
+		assertion_failed;\
 	}\
 )\
 
@@ -122,7 +123,7 @@ int	test_that_non_overlapping_tetrominoes_dont_overlap_basic()
 	t_tetromino *o = new_tetromino(&valid_o_shape);
 	t_tetromino *i = new_tetromino(&valid_i_shape);
 
-	return ASSERT(!intersects_with(o, i));
+	return ASSERT(intersects_with(o, i) == 0);
 }
 
 int	test_that_non_overlapping_tetrominoes_dont_overlap()
@@ -130,7 +131,7 @@ int	test_that_non_overlapping_tetrominoes_dont_overlap()
 	t_tetromino *o = new_tetromino(&valid_o_shape);
 	t_tetromino *j = new_tetromino(&valid_j_shape);
 
-	return ASSERT(!intersects_with(o, j));
+	return ASSERT(intersects_with(o, j) == 0);
 }
 
 int	test_that_overlapping_tetrominoes_do_overlap()
@@ -156,11 +157,13 @@ int	main()
 	{
 		ft_putstr(GREEN);
 		ft_putstr("ALL TESTS OK\n");
+		ft_putstr(RESET);
 	}
 	else
 	{
 		ft_putstr(RED);
 		ft_putstr(ft_strjoin(ft_itoa(g_err), " TESTS FAILED\n"));
+		ft_putstr(RESET);
 	}
 	return (0);
 }
