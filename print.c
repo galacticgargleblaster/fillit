@@ -6,12 +6,14 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/08 16:05:13 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/08 17:03:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib/libft/libft.h"
 #include "fillit.h"
+
+#ifdef COLORS
 
 /*
 **  https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
@@ -24,9 +26,28 @@
 #define ORANGE "\033[7;33m"
 #define GREEN "\033[7;32m"
 #define RED "\033[7;31m"
+#define RESET "\033[0m"
 
+const char* const g_colors[] = {
+	CYAN,
+	YELLOW,
+	MAGENTA,
+	BLUE,
+	ORANGE,
+	GREEN,
+	RED,
+};
 
-t_board *compose_board(t_list *tet_list)
+static const char*	get_color_for_char(unsigned char c)
+{
+	if (c == '.')
+		return (RESET);
+	return (g_colors[c % (sizeof(g_colors) / sizeof(char **))]);
+}
+
+#endif
+
+t_board		*compose_board(t_list *tet_list)
 {
 	t_board *board;
 	t_tetromino *tet; 
@@ -54,18 +75,27 @@ t_board *compose_board(t_list *tet_list)
 	return (board);
 }
 
-void	print_board(t_board *board)
+void		print_board(t_board *board, unsigned char sidelength)
 {
 	unsigned char x;
 	unsigned char y;
+	unsigned char c;
 
+	sidelength = MIN(sidelength, MAX_BOARD_SIDELENGTH);
 	y = 0;
-	while (y < MAX_BOARD_SIDELENGTH)
+	while (y < sidelength)
 	{
 		x = 0;
-		while (x < MAX_BOARD_SIDELENGTH)
+		while (x < sidelength)
 		{
-			ft_putchar((*board)[y][x]);
+			c = (*board)[y][x];
+			#ifdef COLORS
+			ft_putstr((char*)get_color_for_char(c));
+			#endif
+			ft_putchar(c);
+			#ifdef COLORS
+			ft_putstr(RESET);
+			#endif
 			x++;
 		}
 		ft_putchar('\n');

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:42 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/08 14:35:57 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/08 16:54:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_board			*new_board(void);
 **	print.c
 */
 
-void			print_board(t_board *board);
+void			print_board(t_board *board, unsigned char sidelength);
 t_board			*compose_board(t_list *tet_list);
 
 #endif

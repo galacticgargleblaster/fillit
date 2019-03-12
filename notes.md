@@ -5,14 +5,26 @@ cites
 https://arxiv.org/pdf/cs/0011047.pdf
 
 ## Tetromino Validity Check
-[^1] checks each `#` for fewer than six neighbors, and asserts that the total number of `#` is 4.
+[1](#alexisadorn)checks each `#` for fewer than six neighbors, and asserts that the total number of `#` is 4.
+
 ./prior_art/alexisadorn/srcs/check_if_valid.c
 
-all prior art seems to function similarly here.
+all prior art <sup>[2](#pbondoer)</sup> seems to function similarly here.
 
 ## Tetromino data representation
 
-Rotated tetrominoes are considered unique.
+Shrinking the problem space by one dimension per tetromino, rotated tetrominoes are considered unique.
 
-[^1] https://github.com/alexisadorn/42-fillit
-[^2] https://github.com/pbondoer/42-fillit
+## Is this an Exact Cover problem?
+
+https://en.wikipedia.org/wiki/Exact_cover
+http://garethrees.org/2007/06/10/zendoku-generation/#section-4
+
+
+
+https://www.ocf.berkeley.edu/~jchu/publicportal/sudoku/sudoku.paper.html
+
+
+
+<a name="alexisadorn">1</a>: https://github.com/alexisadorn/42-fillit
+<a name="pbondoer">2</a>: https://github.com/pbondoer/42-fillit

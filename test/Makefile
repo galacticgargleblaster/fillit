@@ -1,11 +1,11 @@
-NAME = fillit
+NAME = test_executable
 
 SOURCE_DIR = .
 SOURCES = $(wildcard $(SOURCE_DIR)/*.c)
 SOURCE_BASENAMES = $(notdir $(SOURCES))
 
 
-LIBFT_DIR = ./lib/libft
+LIBFT_DIR = ../lib/libft
 INCLUDES = $(LIBFT_DIR) $(SOURCE_DIR)
 CC = clang
 CPP = clang -E
@@ -30,6 +30,7 @@ OBJECTS := $(patsubst %,$(OBJECT_DIR)/%.o,$(basename $(SOURCE_BASENAMES)))
 all: $(NAME)
 
 $(NAME): $(SOURCES)
+	echo "foo"
 	make -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) -lft -L$(LIBFT_DIR) $^ -o $@
 
@@ -43,7 +44,3 @@ re: clean all
 	
 debug: CFLAGS += -g -DDEBUG -DCOLORS
 debug: fclean all
-
-tests:
-	make -C test/
-	test/test_executable

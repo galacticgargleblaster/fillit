@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/08 14:05:39 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/08 16:33:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av)
 		EXIT ;
 	
 	t_board *board = compose_board(tet_list);
-	print_board(board);
+	print_board(board, 10);
 	(void)ac;
 	return (0);
 }
