@@ -9,7 +9,7 @@ LIBFT_DIR = ../lib/libft
 INCLUDES = $(LIBFT_DIR) $(SOURCE_DIR)
 CC = clang
 CPP = clang -E
-CFLAGS = -Wall -Werror -Wextra $(foreach d, $(INCLUDES), -I$d)
+CFLAGS = -Wall -Werror -Wextra -g $(foreach d, $(INCLUDES), -I$d)
 
 # ------------------------------------------------------------------------------#
 # This method of directory creation is adapted from:
@@ -30,7 +30,6 @@ OBJECTS := $(patsubst %,$(OBJECT_DIR)/%.o,$(basename $(SOURCE_BASENAMES)))
 all: $(NAME)
 
 $(NAME): $(SOURCES)
-	echo "foo"
 	make -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) -lft -L$(LIBFT_DIR) $^ -o $@
 
@@ -41,6 +40,3 @@ fclean: clean
 	/bin/rm -f $(NAME)
 
 re: clean all
-	
-debug: CFLAGS += -g -DDEBUG -DCOLORS
-debug: fclean all
