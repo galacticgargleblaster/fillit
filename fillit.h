@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:42 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/08 16:54:56 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/12 17:57:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,17 @@ typedef	struct	s_coordinate
 	signed char	y;
 }				t_coordinate;
 
+/*
+**	A tetromino contains a shape and metadata about that shape
+**	x_min, .., y_max -- describe the edges of the rectangle that bounds the shape,
+**	because no shape occupies the entire 4x4 space.
+**	label - 'A', 'B', 'C', 'D', ... depending on the order in which the
+**	tetromino was read.
+*/
+
 typedef struct	s_tetromino
 {
 	t_shape			*shape;
-	t_coordinate	coord;
 	unsigned char	x_min;
 	unsigned char	x_max;
 	unsigned char	y_min;
@@ -48,7 +55,17 @@ typedef struct	s_tetromino
 	unsigned char	label;
 }				t_tetromino;
 
-#define AS_TET(lst) ((t_tetromino *)(lst->content))
+/*
+**	A guess represents a placement of a tetromino at a set of coordinates.
+**	A single tetromino may have many possible guesses about its position,
+**	as such multiple guesses may point to the same tetromino.
+*/
+
+typedef struct	s_guess
+{
+	t_tetromino		*tet;
+	t_coordinate	coord;	
+}				t_guess;
 
 typedef char	t_board[MAX_BOARD_SIDELENGTH][MAX_BOARD_SIDELENGTH];
 

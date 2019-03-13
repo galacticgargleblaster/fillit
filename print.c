@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/08 17:03:56 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/12 17:59:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,30 @@ static const char*	get_color_for_char(unsigned char c)
 
 #endif
 
-t_board		*compose_board(t_list *tet_list)
+t_board		*compose_board(t_list *guess_list)
 {
 	t_board *board;
-	t_tetromino *tet; 
+	t_guess	*guess;
 	signed char x;
 	signed char y;
 
 	board = new_board();
-	while (tet_list)
+	while (guess_list)
 	{
-		tet = AS_TET(tet_list);
-		y = tet->y_min;	
-		while (y <= tet->y_max)
+		guess = (t_guess *)(guess_list->content);
+		y = guess->tet->y_min;	
+		while (y <= guess->tet->y_max)
 		{
-			x = tet->x_min;
-			while (x <= tet->x_max)
+			x = guess->tet->x_min;
+			while (x <= guess->tet->x_max)
 			{
-				if ((*tet->shape)[y][x] == FILLED)
-					(*board)[tet->coord.y + y][tet->coord.x + x] = tet->label;
+				if ((*guess->tet->shape)[y][x] == FILLED)
+					(*board)[guess->coord.y + y][guess->coord.x + x] = guess->tet->label;
 				x++;
 			}
 			y++;
 		}
-		tet_list = tet_list->next;
+		guess_list = guess_list->next;
 	}
 	return (board);
 }
