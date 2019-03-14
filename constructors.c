@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/11 17:39:08 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/12 18:53:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,23 @@ t_tetromino	*new_tetromino(t_shape* shape)
 	if (tet == NULL)
 		return (NULL);
 	tet->shape = shape;
-	tet->coord.x = 0;
-	tet->coord.y = 0;
 	init_tet_min_max(tet);
 	tet->label = 'A' + g_label;
 	g_label++;
 	return (tet);
+}
+
+t_guess		*new_guess(unsigned char x, unsigned char y, t_tetromino *t)
+{
+	t_guess	*guess;
+
+	guess = malloc(sizeof(t_guess));
+	if (guess == NULL)
+		return (NULL);
+	guess->tet = t;
+	guess->coord.x = x;
+	guess->coord.y = y;
+	return (guess);
 }
 
 t_board		*new_board(void)

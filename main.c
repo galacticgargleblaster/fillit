@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/08 16:33:04 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/14 10:33:38 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	main(int ac, char **av)
 	if ((read_tetrominoes_from_fd(open(av[1], O_RDONLY), &tet_list)) == READ_ERROR)
 		EXIT ;
 	
-	t_board *board = compose_board(tet_list);
-	print_board(board, 10);
+	naive_solve(tet_list);
 	(void)ac;
 	return (0);
 }

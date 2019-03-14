@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/12 00:55:27 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/12 19:00:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,31 +117,42 @@ int	test_min_max_finding_with_o()
 	return (0);
 }
 
-
-int	test_that_non_overlapping_tetrominoes_dont_overlap_basic()
+int	test_intersects_with_basic()
 {
-	t_tetromino *o = new_tetromino(&valid_o_shape);
-	t_tetromino *i = new_tetromino(&valid_i_shape);
+	t_guess *o = new_guess(0, 0, new_tetromino(&valid_o_shape));
+	t_guess *i = new_guess(0, 0, new_tetromino(&valid_i_shape));
 
 	return ASSERT(intersects_with(o, i) == 0);
 }
 
-int	test_that_non_overlapping_tetrominoes_dont_overlap()
+int	test_intersects_with()
 {
-	t_tetromino *o = new_tetromino(&valid_o_shape);
-	t_tetromino *j = new_tetromino(&valid_j_shape);
+	t_guess *o = new_guess(0, 0, new_tetromino(&valid_o_shape));
+	t_guess *j = new_guess(0, 0, new_tetromino(&valid_j_shape));
 
 	return ASSERT(intersects_with(o, j) == 0);
 }
 
-int	test_that_overlapping_tetrominoes_do_overlap()
+int	test_intersects_with_overlapped_case()
 {
-	t_tetromino *o = new_tetromino(&valid_o_shape);
-	t_tetromino *j = new_tetromino(&valid_j_shape);
-	j->coord.x = 1;
+	t_guess *o = new_guess(0, 0, new_tetromino(&valid_o_shape));
+	t_guess *j = new_guess(1, 0, new_tetromino(&valid_j_shape));
 
 	return ASSERT(intersects_with(o, j));
+}
 
+int	test_fits_within_board_of_size()
+{
+	t_guess	*o = new_guess(-2, -1, new_tetromino(&valid_o_shape));
+
+	return ASSERT(fits_within_board_of_size(o, 2));
+}
+
+int	test_fits_within_board_of_size_fails()
+{
+	t_guess	*o = new_guess(-2, -2, new_tetromino(&valid_o_shape));
+
+	return ASSERT(fits_within_board_of_size(o, 2) == 0);
 }
 
 int	main()
@@ -149,9 +160,11 @@ int	main()
 
 	DO_TEST(test_min_max_finding_with_i);
 	DO_TEST(test_min_max_finding_with_o);
-	DO_TEST(test_that_non_overlapping_tetrominoes_dont_overlap_basic);
-	DO_TEST(test_that_non_overlapping_tetrominoes_dont_overlap);
-	DO_TEST(test_that_overlapping_tetrominoes_do_overlap);
+	DO_TEST(test_intersects_with_basic);
+	DO_TEST(test_intersects_with);
+	DO_TEST(test_intersects_with_overlapped_case);
+	DO_TEST(test_fits_within_board_of_size);
+	DO_TEST(test_fits_within_board_of_size_fails);
 
 	if (g_err == 0)
 	{
