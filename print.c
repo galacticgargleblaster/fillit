@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/24 23:33:06 by student          ###   ########.fr       */
+/*   Updated: 2019/03/25 14:59:24 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,65 @@ static const char*	get_color_for_char(unsigned char c)
 	return (g_colors[c % (sizeof(g_colors) / sizeof(char **))]);
 }
 
+void ft_putchar_color(char c)
+{
+	ft_putstr((char*)get_color_for_char(c));
+	ft_putchar(c);
+	ft_putstr(RESET);
+}
+
+#else
+
+void ft_putchar_color(char c)
+{
+	ft_putchar(c);
+}
+
 #endif
+
+
+void		print_tetromino(t_tetromino *tet)
+{
+	unsigned char	x;
+	unsigned char	y;
+	unsigned char	i;
+	char			c;
+
+	y = 0;
+	while (y < 4)
+	{
+		x = 0;
+		while (x < 4)
+		{
+			c = EMPTY;
+			i = 0;
+			while (i < 4)
+			{
+				if (tet->shape[i].x == x && tet->shape[i].y == y)
+					c = tet->label;
+				i++;
+			}
+			ft_putchar_color(c);
+			x++;
+		}
+		ft_putchar_color('\n');
+		y++;
+	}
+}
+
+void	print_tetrominoes(t_doubly_linked_list *tet_list)
+{
+	t_element_container	*tmp;
+
+	tmp = tet_list->tail;
+	while (tmp)
+	{
+		print_tetromino((t_tetromino *)tmp->element);
+		ft_putchar('\n');
+		tmp = tmp->next;
+	}
+}
+
 
 		#include "stdio.h"
 t_board		*compose_board(t_doubly_linked_list *guess_list)
@@ -53,20 +111,23 @@ t_board		*compose_board(t_doubly_linked_list *guess_list)
 	t_board *board;
 	t_guess	*guess;
 	unsigned char i;
+	unsigned char j;
 
 	board = new_board();
 	ft_putstr(ft_strjoin(ft_strjoin("Printing ", ft_itoa(guess_list->size)), " guesses\n"));
 	i = 0;
-	while (guess_list->size)
+	while (i < guess_list->size)
 	{
 		printf("guess list at: %p\n", guess_list);
-		guess = (t_guess *)(list_pop_head(guess_list));
+		guess = (t_guess *)(list_get_index(guess_list, i));
 		printf("guess: %d\taddr:%p\tx: %d\ty%d\n", i++, guess, guess->coord.x, guess->coord.y);
-		while (i < 4)
+		j = 0;
+		while (j < 4)
 		{
-			(*board)[absolute_y(guess, i)][absolute_x(guess, i)] = guess->tet->label;
-			i++;
+			(*board)[absolute_y(guess, j)][absolute_x(guess, j)] = guess->tet->label;
+			j++;
 		}
+		i++;
 	}
 	return (board);
 }
@@ -85,13 +146,7 @@ void		print_board(t_board *board, unsigned char sidelength)
 		while (x < sidelength)
 		{
 			c = (*board)[y][x];
-			#ifdef COLORS
-			ft_putstr((char*)get_color_for_char(c));
-			#endif
-			ft_putchar(c);
-			#ifdef COLORS
-			ft_putstr(RESET);
-			#endif
+			ft_putchar_color(c);
 			x++;
 		}
 		ft_putchar('\n');

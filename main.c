@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/20 23:33:36 by student          ###   ########.fr       */
+/*   Updated: 2019/03/25 14:48:40 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char **av)
 	tet_list = new_doubly_linked_list();
 	if ((read_tetrominoes_from_fd(open(av[1], O_RDONLY), tet_list)) == READ_ERROR)
 		EXIT ;
-	
+	print_tetrominoes(tet_list);
 	naive_solve(tet_list);
 	(void)ac;
 	return (0);
