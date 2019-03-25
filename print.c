@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/25 14:59:24 by student          ###   ########.fr       */
+/*   Updated: 2019/03/25 16:35:22 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,8 @@ t_board		*compose_board(t_doubly_linked_list *guess_list)
 	i = 0;
 	while (i < guess_list->size)
 	{
-		printf("guess list at: %p\n", guess_list);
 		guess = (t_guess *)(list_get_index(guess_list, i));
-		printf("guess: %d\taddr:%p\tx: %d\ty%d\n", i++, guess, guess->coord.x, guess->coord.y);
+		printf("guess: %d\taddr:%p\tx: %d\ty%d\n", i, guess, guess->coord.x, guess->coord.y);
 		j = 0;
 		while (j < 4)
 		{

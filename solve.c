@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/25 15:06:11 by student          ###   ########.fr       */
+/*   Updated: 2019/03/25 15:23:47 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include "lib/liblist/liblist.h"
 #include "fillit.h"
 #include <stdlib.h>
+
+/*
+**	
+*/
 
 static int		guesses_intersect(t_guess *a, t_guess *b)
 {
@@ -109,10 +113,10 @@ int		naive_solve_recursively(t_doubly_linked_list *tet_list,
 	while ((tmp = get_next_unplaced_tetromino(tet_list, tet_idx, guesses)))
 	{
 		guess = new_guess(0, 0, tmp);
-		while (guess->coord.y < sidelength)
+		while (guess->coord.y + guess->tet->max.y < sidelength)
 		{
 			guess->coord.x = 0;
-			while (guess->coord.x < sidelength)
+			while (guess->coord.x + guess->tet->max.x < sidelength)
 			{
 				if (fits_on_board(guess, guesses, sidelength))
 				{
@@ -120,7 +124,7 @@ int		naive_solve_recursively(t_doubly_linked_list *tet_list,
 					list_push_head(guesses, guess);
 					if (naive_solve_recursively(tet_list, guesses, sidelength))
 					{
-					printf("%slabel %c fits on board at x: %d\t y: %d\n", ft_strnew(sidelength), tmp->label, guess->coord.x, guess->coord.y);
+					printf("%slabel %c fits on board at x: %d\t y: %d\t with  %zu guesses\n", ft_strnew(sidelength), tmp->label, guess->coord.x, guess->coord.y, guesses->size);
 						return (1);
 					}
 					else
