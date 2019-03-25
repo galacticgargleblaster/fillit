@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/14 11:13:59 by nkirkby          ###   ########.fr       */
+/*   Updated: 2019/03/24 23:33:06 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,25 @@ static const char*	get_color_for_char(unsigned char c)
 #endif
 
 		#include "stdio.h"
-t_board		*compose_board(t_list *guess_list)
+t_board		*compose_board(t_doubly_linked_list *guess_list)
 {
 	t_board *board;
 	t_guess	*guess;
-	signed char x;
-	signed char y;
+	unsigned char i;
 
 	board = new_board();
-	ft_putstr(ft_strjoin(ft_strjoin("Printing ", ft_itoa(ft_lstlen(&guess_list))), " guesses\n"));
-	int i = 0;
-	while (guess_list)
+	ft_putstr(ft_strjoin(ft_strjoin("Printing ", ft_itoa(guess_list->size)), " guesses\n"));
+	i = 0;
+	while (guess_list->size)
 	{
 		printf("guess list at: %p\n", guess_list);
-		guess = (t_guess *)(guess_list->content);
+		guess = (t_guess *)(list_pop_head(guess_list));
 		printf("guess: %d\taddr:%p\tx: %d\ty%d\n", i++, guess, guess->coord.x, guess->coord.y);
-		y = guess->tet->y_min;	
-		while (y <= guess->tet->y_max)
+		while (i < 4)
 		{
-			x = guess->tet->x_min;
-			while (x <= guess->tet->x_max)
-			{
-				if ((*guess->tet->shape)[y][x] == FILLED)
-					(*board)[guess->coord.y + y][guess->coord.x + x] = guess->tet->label;
-				x++;
-			}
-			y++;
+			(*board)[absolute_y(guess, i)][absolute_x(guess, i)] = guess->tet->label;
+			i++;
 		}
-		guess_list = guess_list->next;
 	}
 	return (board);
 }

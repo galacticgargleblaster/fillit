@@ -3,87 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   solve.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/14 11:13:20 by nkirkby          ###   ########.fr       */
+/*   Updated: 2019/03/25 00:42:22 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib/libft/libft.h"
+#include "lib/liblist/liblist.h"
 #include "fillit.h"
 #include <stdlib.h>
 
-/*
-**	Calculate the edges of the rectangle that bounds this guess	
-*/
-
-static char left_edge(t_guess *g)
+static int		guesses_intersect(t_guess *a, t_guess *b)
 {
-	return ((g->coord.x) + (g->tet->x_min));
-}
+	unsigned char	i;
+	unsigned char	j;
 
-static char right_edge(t_guess *g)
-{
-	return ((g->coord.x) + (g->tet->x_max));
-}
-
-static char top_edge(t_guess *g)
-{
-	return ((g->coord.y) + (g->tet->y_min));
-}
-
-static char bottom_edge(t_guess *g)
-{
-	return ((g->coord.y) + (g->tet->y_max));
-}
-
-/*
-**          TOP
-**          EDGE
-**          (y==1)
-**
-**        	....
-**   LEFT  	##..   RIGHT
-**   EDGE  	.#..   EDGE 
-**  (x==0)	.#..  (x==1)
-**
-**          BOTTOM
-**          EDGE 
-**          (y==3)
-*/
-
-int		intersects_with(t_guess *a, t_guess *b)
-{
-	unsigned char	x;
-	unsigned char	y;
-
-	if ((left_edge(b) > right_edge(a)) || (right_edge(b) < left_edge(a)) ||
-		(top_edge(b) > bottom_edge(a)) || (bottom_edge(b) < top_edge(a)))
-		return (0);
-	else
+	i = 0;
+	while (i < 4)
 	{
-		y = MAX(top_edge(a), top_edge(b));
-		while (y < MIN(bottom_edge(a), bottom_edge(b)))
+		j = 0;
+		while(j < 4)
 		{
-			x = MAX(left_edge(a), left_edge(b));
-			while (x < MIN(right_edge(a), right_edge(b)))
-			{
-				if (((*a->tet->shape)[y - a->coord.y][x - a->coord.x] == FILLED) &&
-					((*b->tet->shape)[y - b->coord.y][x - b->coord.x] == FILLED))
-					return (1);
-				x++;
-			}
-			y++;
+			if (absolute_x(a, i) == absolute_x(b, j) &&
+				absolute_y(a, i) == absolute_y(b, j))
+				return (1);
+			j++;
 		}
+		i++;
 	}
 	return (0);
 }
 
-int		fits_within_board_of_size(t_guess *g, unsigned char sidelength)
+static int		fits_within_board_of_size(t_guess *g, unsigned char sidelength)
 {
-	return ((right_edge(g) <= sidelength) && (left_edge(g) >= 0) &&
-			(bottom_edge(g) <= sidelength) && (top_edge(g) >= 0));
+	return ((g->tet->max.x <= sidelength) && (g->coord.x >= 0) &&
+			(g->tet->max.y <= sidelength) && (g->coord.y >= 0));
 }
 
 /*
@@ -91,16 +47,19 @@ int		fits_within_board_of_size(t_guess *g, unsigned char sidelength)
 **	the board boundaries.
 */
 
-int		fits_on_board(t_guess *new_guess, t_list* existing_guess,
+static int		fits_on_board(t_guess *new_guess, t_doubly_linked_list* guesses,
 						unsigned char sidelength)
 {
+	t_element_container	*guess_container; 
+
+	guess_container = guesses->head;
 	if (fits_within_board_of_size(new_guess, sidelength))
 	{
-		while (existing_guess)
+		while (guess_container)
 		{
-			if (intersects_with((t_guess *)(existing_guess->content), new_guess))
+			if (guesses_intersect((t_guess *)(guess_container->element), new_guess))
 				return (0);
-			existing_guess = existing_guess->next;
+			guess_container = guess_container->next;
 		}	
 		return (1);
 	}
@@ -109,41 +68,53 @@ int		fits_on_board(t_guess *new_guess, t_list* existing_guess,
 
 #define	INITIAL_BOARD_SIDELENGTH 2
 
-		#include "stdio.h"
-int		naive_solve(t_list *tet_list)
+#include "stdio.h"
+int		naive_solve_recursively(t_doubly_linked_list *tet_list,
+								t_doubly_linked_list *guesses, unsigned char sidelength)
+{
+	t_guess *guess;
+
+	if (tet_list->size == 0)
+		return (1);
+	guess = new_guess(0, 0, (t_tetromino *)(list_pop_head(tet_list)));
+	while (tet_list->size && guess->coord.y < sidelength)
+	{
+		guess->coord.x = 0;
+		while (tet_list->size && guess->coord.x < sidelength)
+		{
+			if (fits_on_board(guess, guesses, sidelength))
+			{
+				list_push_head(guesses, guess);
+				if (naive_solve_recursively(tet_list, guesses, sidelength))
+					return (1);
+			}
+			else
+			{
+				list_push_head(tet_list, guess->tet);
+				free(guess);
+			}
+			guess->coord.x++;
+		}
+		guess->coord.y++;
+	}
+	return (0);
+}
+
+int		naive_solve(t_doubly_linked_list *tet_list)
 {
 	t_board	*board;
-	t_guess *guess;
-	t_list *existing_guess = NULL;
-	unsigned char x = 0;
-	unsigned char y = 0; 
+	t_doubly_linked_list *guesses;
 	unsigned char sidelength = 2;
 	
-	while (tet_list)
+	guesses = new_doubly_linked_list();
+	while (tet_list->size)
 	{
-		y = 0;
-		while (tet_list && y < sidelength)
-		{
-			x = 0;
-			while (tet_list && x < sidelength)
-			{
-				guess = new_guess(x, y, (t_tetromino *)(tet_list->content));
-				if (fits_on_board(guess, existing_guess, sidelength))
-				{
-					printf("guess: %p\t, x: %d\t y: %d\n", guess, guess->coord.x, guess->coord.y);
-					existing_guess = ft_lstpush(existing_guess, ft_lstnewlink(guess));
-					printf("guess list at: %p\n", existing_guess);
-					tet_list = tet_list->next;
-				}
-				else
-					free(guess);
-				x++;
-			}
-			y++;
-		}
+		if (naive_solve_recursively(tet_list, guesses, sidelength))
+			break;
 		sidelength++;
+		DMSG(ft_strjoin("Growing sidelength to ", ft_itoa(sidelength)));
 	}	
-	board = compose_board(existing_guess);
+	board = compose_board(guesses);
 	print_board(board, sidelength);
 	return (0);
 }

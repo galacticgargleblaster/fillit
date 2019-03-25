@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   constructors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/12 18:53:08 by marvin           ###   ########.fr       */
+/*   Updated: 2019/03/24 23:33:08 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,60 +28,45 @@ t_shape	*new_shape(void)
 	return (shape);
 }
 
-/*
-**	A tetromino's position within a shape is underconstrained.  We can
-**	maybe? save some searching time by caching the relative position
-**	of a tetromino within a 4x4 space.
-**	
-**	#...	...#	
-**	#...	...#	
-**	#...	...#	
-**	#...	...#	
-**
-**	This function calculates and caches the position of the tetromino
-**	within the shape.
-**	
-**	And it's almost certainly premature optimization, the bane of all
-**	software projects
-*/
-
-static void	init_tet_min_max(t_tetromino *tet)
+static void	move_shape_to_upper_left(t_tetromino *tet)
 {
-	int			x;
-	int			y;
-
-	tet->x_min = T_BOUND_SIZE;
-	tet->x_max = 0;
-	tet->y_min = T_BOUND_SIZE;
-	tet->y_max = 0;
-	y = -1;
-	while (++y < T_BOUND_SIZE)
+	unsigned char	i;
+	unsigned char	min_x;
+	unsigned char	min_y;
+	
+	i = 0;
+	min_x = 3;
+	min_y = 3;
+	tet->max.x = 0;
+	tet->max.y = 0;
+	while (i < 4)
 	{
-		x = -1;
-		while (++x < T_BOUND_SIZE)
-		{
-			if ((*tet->shape)[y][x] == FILLED)
-			{
-				tet->x_min = MIN(tet->x_min, x);
-				tet->x_max = MAX(tet->x_max, x);
-				tet->y_min = MIN(tet->y_min, y);
-				tet->y_max = MAX(tet->y_max, y);
-			}
-		}
+		min_x = MIN(min_x, tet->shape[i].x);
+		min_y = MIN(min_y, tet->shape[i].y);
+		i++;
+	}
+	i = 0;
+	while (i < 4)
+	{
+		tet->shape[i].x = tet->shape[i].x - min_x;
+		tet->shape[i].y = tet->shape[i].y - min_y;
+		tet->max.x = MAX(tet->max.x, tet->shape[i].x);
+		tet->max.y = MAX(tet->max.y, tet->shape[i].y);
+		i++;
 	}
 }
 
 static unsigned char	g_label = 0;
 
-t_tetromino	*new_tetromino(t_shape* shape)
+t_tetromino	*new_tetromino(t_shape shape)
 {
 	t_tetromino				*tet;
 
 	tet = malloc(sizeof(t_tetromino));
 	if (tet == NULL)
 		return (NULL);
-	tet->shape = shape;
-	init_tet_min_max(tet);
+	ft_memcpy(tet->shape, shape, sizeof(t_shape));
+	move_shape_to_upper_left(tet);
 	tet->label = 'A' + g_label;
 	g_label++;
 	return (tet);

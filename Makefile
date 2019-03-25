@@ -7,11 +7,12 @@ SOURCES_MINUS_MAIN := $(filter-out main.c,$(SOURCES))
 TEST_SOURCES = $(SOURCES_MINUS_MAIN) ./test/main.c
 
 LIBFT_DIR = ./lib/libft
-INCLUDES = $(LIBFT_DIR) $(SOURCE_DIR)
+LIBLIST_DIR = ./lib/liblist
+INCLUDES = $(LIBFT_DIR) $(LIBLIST_DIR) $(SOURCE_DIR)
 CC = clang
 CPP = clang -E
 CFLAGS = -Wall -Werror -Wextra $(foreach d, $(INCLUDES), -I$d)
-LINKER_FLAGS = -lft -L$(LIBFT_DIR)
+LINKER_FLAGS = -lft -L$(LIBFT_DIR) -llist -L$(LIBLIST_DIR)
 
 .SUFFIXES: # remove the default suffix rules, because the GNU Make manual states:
 # Suffix rules are the old-fashioned way of defining implicit rules for make.
@@ -21,6 +22,7 @@ all: $(NAME)
 
 $(NAME): $(SOURCES)
 	make -C $(LIBFT_DIR)
+	make -C $(LIBLIST_DIR)
 	$(CC) $(CFLAGS) $(LINKER_FLAGS) $^ -o $@
 
 clean:
@@ -29,9 +31,9 @@ clean:
 fclean: clean
 	/bin/rm -f $(NAME)
 
-re: clean all
+re: fclean all
 	
-debug: CFLAGS += -g -DDEBUG -DCOLORS
+debug: CFLAGS += -g -DDEBUG -DCOLORS -DDEBUG_MESSAGES
 debug: fclean all
 
 tests: test/main.c

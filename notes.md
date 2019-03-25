@@ -5,8 +5,6 @@ to checkout prior art submodules:
 `git submodule update`
 
 https://github.com/nmei-42/42-fillit
-
-cites
 https://arxiv.org/pdf/cs/0011047.pdf
 
 ## Tetromino Validity Check
@@ -20,15 +18,13 @@ all prior art <sup>[2](#pbondoer)</sup> seems to function similarly here.
 
 Shrinking the problem space by one dimension per tetromino, rotated tetrominoes are considered unique.
 
-## Is this an Exact Cover problem?
+## Q: Is this an Exact Cover problem?
+
+### A: Yes, it can be represented as one
 
 https://en.wikipedia.org/wiki/Exact_cover
 http://garethrees.org/2007/06/10/zendoku-generation/#section-4
-
-
-
 https://www.ocf.berkeley.edu/~jchu/publicportal/sudoku/sudoku.paper.html
-
 
 
 <a name="alexisadorn">1</a>: https://github.com/alexisadorn/42-fillit

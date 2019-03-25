@@ -16,3 +16,6 @@
 [submodule "prior_art/nmei"]
 	path = prior_art/nmei
 	url = https://github.com/nmei-42/42-fillit
+[submodule "lib/liblist"]
+	path = lib/liblist
+	url = https://www.github.com/galacticgargleblaster/liblist
