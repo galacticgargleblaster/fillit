@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/25 16:35:22 by student          ###   ########.fr       */
+/*   Updated: 2019/03/25 18:56:31 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,4 +151,12 @@ void		print_board(t_board *board, unsigned char sidelength)
 		ft_putchar('\n');
 		y++;
 	}
+}
+
+void		print_context(t_solver_context *context)
+{
+	t_board	*board;
+	
+	board = compose_board(context->guesses);
+	print_board(board, context->sidelength);
 }

@@ -4,8 +4,17 @@ to checkout prior art submodules:
 `git submodule init`
 `git submodule update`
 
+Everyone we've found so far uses a *very similar* implementation of recursive backtracking.
+### Stack size
+The maximum stack size is limited to the number of tetrominoes being placed -- 26.
+
+Why choose Knuth's DLX?  It doesn't seem to differ from recursive backtracking in time complexity.  It's elegant, but a little verbose and hard to understand without reading Knuth's paper first.
+
 https://github.com/nmei-42/42-fillit
 https://arxiv.org/pdf/cs/0011047.pdf
+
+# Let's try solving iteratively with a queue
+This is an embarrassingly parallelizable problem.  Although we're prohibited from multithreading in this assignment, I chose to practice writing in iterative rather than recursive form.
 
 ## Tetromino Validity Check
 [1](#alexisadorn)checks each `#` for fewer than six neighbors, and asserts that the total number of `#` is 4.

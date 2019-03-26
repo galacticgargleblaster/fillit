@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/25 15:23:47 by student          ###   ########.fr       */
+/*   Updated: 2019/03/25 19:37:35 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,23 +142,95 @@ int		naive_solve_recursively(t_doubly_linked_list *tet_list,
 	return (0);
 }
 
-int		naive_solve(t_doubly_linked_list *tet_list)
+t_solver_context	*new_context(t_doubly_linked_list *tet_list,
+								t_doubly_linked_list *guesses, unsigned char sidelength)
 {
-	t_board	*board;
-	t_doubly_linked_list *guesses;
-	unsigned char sidelength = 2;
-	
-	guesses = new_doubly_linked_list();
-	while (tet_list->size)
+	t_solver_context	*context;
+
+	context = malloc(sizeof(t_solver_context));
+	context->remaining_tet = tet_list;
+	context->sidelength = sidelength;
+	context->guesses = guesses;
+	context->coord.x = 0;
+	context->coord.y = 0;
+	return (context);
+}
+
+void				destroy_context(t_solver_context *context)
+{
+	if (context->guesses)
+		delete_doubly_linked_list(context->guesses, free);
+	if (context->remaining_tet)
+		delete_doubly_linked_list(context->remaining_tet, NULL);
+	free(context);
+}
+
+/*
+**	Returns the next valid step in the current context, else NULL
+*/
+
+t_solver_context	*get_next_context(t_solver_context *old_context)
+{
+	t_tetromino	*tet;
+	t_guess		*guess;
+	t_solver_context *next_context;
+
+	while (!list_is_empty(old_context->remaining_tet))
 	{
-		if (naive_solve_recursively(tet_list, guesses, sidelength))
-			break;
-		sidelength++;
-		DMSG(ft_strjoin("Growing sidelength to ", ft_itoa(sidelength)));
-		board = compose_board(guesses);
-		print_board(board, sidelength);
+		tet = list_get_head(old_context->remaining_tet);
+		guess = new_guess(old_context->coord.x, old_context->coord.y, tet);
+		while (guess->coord.y + guess->tet->max.y < old_context->sidelength)
+		{
+			guess->coord.x = 0;
+			while (guess->coord.x + guess->tet->max.x < old_context->sidelength)
+			{
+				if (fits_on_board(guess, old_context->guesses, old_context->sidelength))
+				{
+					next_context = new_context(list_copy(old_context->remaining_tet), 
+										new_doubly_linked_list(), old_context->sidelength);
+					list_push_head(next_context->guesses, guess);
+					old_context->coord.y = guess->coord.y;
+					old_context->coord.x = guess->coord.x + 1;
+					return (next_context);
+				}
+				guess->coord.x++;
+			}
+			guess->coord.y++;
+		}
+		list_pop_head(old_context->remaining_tet);
+	}
+	free(guess);
+	return (NULL);
+}
+
+t_solver_context *naive_solve(t_doubly_linked_list *tet_list)
+{
+	t_doubly_linked_list *contexts;
+	t_solver_context	*context;
+	unsigned char	sidelength;
+	
+	sidelength = 2;
+	contexts = new_doubly_linked_list();
+	list_push_head(contexts, new_context(list_copy(tet_list), new_doubly_linked_list(), sidelength));
+	while (1)
+	{
+		context = get_next_context((t_solver_context *)list_get_head(contexts));
+		if (context == NULL)
+			destroy_context(list_pop_head(contexts));
+		else if (list_is_empty(context->remaining_tet))
+			return (context);
+		else
+			list_push_head(contexts, context);
+		
+		if (list_is_empty(contexts))
+		{
+			sidelength++;
+			DMSG(ft_strjoin("Growing sidelength to ", ft_itoa(sidelength)));
+			context = new_context(list_copy(tet_list), new_doubly_linked_list(), sidelength);
+			if (context)
+				list_push_head(contexts, context);
+			else
+				RETURN(NULL, "failed to get new context");
+		}
 	}	
-	board = compose_board(guesses);
-	print_board(board, sidelength);
-	return (0);
 }

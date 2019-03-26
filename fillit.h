@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:42 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/25 14:48:16 by student          ###   ########.fr       */
+/*   Updated: 2019/03/25 18:59:55 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,17 +113,30 @@ t_guess			*new_guess(unsigned char x, unsigned char y, t_tetromino *t);
 t_board			*new_board(void);
 
 /*
+**	solve.c
+*/
+
+/*
+**	A solver context allows us to iterate depth-first over the solution tree
+*/
+
+typedef struct	s_solver_context
+{
+	t_doubly_linked_list	*guesses;
+	t_doubly_linked_list	*remaining_tet;
+	t_coordinate			coord;
+	unsigned char			sidelength;
+}				t_solver_context;
+
+t_solver_context *naive_solve(t_doubly_linked_list *tet_list);
+
+/*
 **	print.c
 */
 
 void			print_board(t_board *board, unsigned char sidelength);
 t_board			*compose_board(t_doubly_linked_list *guess_list);
 void	print_tetrominoes(t_doubly_linked_list *tet_list);
-
-/*
-**	solve.c
-*/
-
-int		naive_solve(t_doubly_linked_list *tet_list);
+void		print_context(t_solver_context *context);
 
 #endif
