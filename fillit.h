@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:42 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/25 18:59:55 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 01:51:39 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,21 @@
 # define FILLED '#'
 # define T_BOUND_SIZE 4
 # define MAX_BOARD_SIDELENGTH (26 * 4)
+
+
+/*
+**	Is this a reasonable way to represent status codes?
+**	what makes this better or worse than a preprocessor definition?
+*/
+
+typedef enum	e_status
+{
+	ERROR=-1,
+	OK,
+	COMPLETE,
+	EXHAUSTED
+}				t_status;
+
 
 typedef	struct	s_coordinate
 {
@@ -89,19 +104,15 @@ typedef struct	s_guess
 	t_coordinate	coord;	
 }				t_guess;
 
-unsigned char	absolute_x(t_guess *g, unsigned char i);
-unsigned char	absolute_y(t_guess *g, unsigned char i);
+unsigned char	absolute_x(const t_guess *g, unsigned char i);
+unsigned char	absolute_y(const t_guess *g, unsigned char i);
 
 /*
 **	parse.c
 */
 
-# define ERROR -1
-# define READ_ERROR ERROR
-# define READ_OK 0
-# define READ_COMPLETE 1
 
-int				read_tetrominoes_from_fd(int fd, t_doubly_linked_list *tet_list);
+t_status		read_tetrominoes_from_fd(int fd, t_doubly_linked_list *tet_list);
 
 /*
 **	constructors.c
@@ -117,13 +128,19 @@ t_board			*new_board(void);
 */
 
 /*
-**	A solver context allows us to iterate depth-first over the solution tree
+**	A solver context stores the same information that might exist in the stack frames
+**	of a recursive solution.
+**
+**	- remaining_tet:	list of tetrominoes that need placing
+**	- guesses:			list of guesses -- placed tetrominoes
+**	- coord:			x, y where the next attempt will be made to place a tetromino
+**	- sidelength:		the board sidelength
 */
 
 typedef struct	s_solver_context
 {
-	t_doubly_linked_list	*guesses;
 	t_doubly_linked_list	*remaining_tet;
+	t_doubly_linked_list	*guesses;
 	t_coordinate			coord;
 	unsigned char			sidelength;
 }				t_solver_context;
