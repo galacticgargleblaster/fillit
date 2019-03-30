@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 03:01:53 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 03:05:42 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int		guess_fits_in_context(const t_guess *new_guess, const t_solver_conte
 {
 	t_element_container	*existing_guesses; 
 
-	existing_guesses = c->guesses->head;
+	existing_guesses = c->guesses->tail;
 	if (fits_within_board_of_size(new_guess, c->sidelength))
 	{
 		while (existing_guesses)
