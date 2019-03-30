@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 01:50:08 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 03:01:53 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /*
 **	
 */
-
+#include <stdio.h>
 static int		guesses_intersect(const t_guess *a, const t_guess *b)
 {
 	unsigned char	i;
@@ -42,8 +42,8 @@ static int		guesses_intersect(const t_guess *a, const t_guess *b)
 
 static int		fits_within_board_of_size(const t_guess *g, unsigned char sidelength)
 {
-	return ((g->tet->max.x < sidelength) && (g->coord.x >= 0) &&
-			(g->tet->max.y < sidelength) && (g->coord.y >= 0));
+	return ((g->tet->max.x + g->coord.x < sidelength) &&
+			(g->tet->max.y + g->coord.y < sidelength));
 }
 
 /*
@@ -84,19 +84,26 @@ t_solver_context	*new_context(t_doubly_linked_list *tet_list,
 	return (context);
 }
 
+
+void				*copy_guess(void *g_ptr)
+{
+	t_guess	*guess;
+
+	guess = (t_guess *)g_ptr;
+	return (new_guess(guess->coord.x, guess->coord.y, guess->tet));
+}
+
 t_solver_context	*clone_context(const t_solver_context *context)
 {
 	return (new_context(list_copy(context->remaining_tet),
-						list_copy(context->guesses),
+						list_deepcopy(context->guesses, &copy_guess),
 						context->sidelength));
 }
 
 void				destroy_context(t_solver_context *context)
 {
-	if (context->guesses)
-		delete_doubly_linked_list(context->guesses, free);
-	if (context->remaining_tet)
-		delete_doubly_linked_list(context->remaining_tet, NULL);
+	delete_doubly_linked_list(context->guesses, free);
+	delete_doubly_linked_list(context->remaining_tet, NULL);
 	free(context);
 }
 
@@ -124,26 +131,6 @@ t_status	increment_x_y_coordinates(t_solver_context *c)
 }
 
 /*
-**	make
-*/
-
-t_status	place_next_tetromino(t_solver_context *c)
-{
-	t_tetromino		*next_tet;
-	t_guess			*guess;
-
-	next_tet = list_pop_head(c->remaining_tet);
-	guess = new_guess(c->coord.x, c->coord.y, next_tet);
-	while (!(guess_fits_in_context(guess, c)))
-	{
-		if (EXHAUSTED == increment_x_y_coordinates(c))
-			return (EXHAUSTED);
-	}
-	list_push_head(c->guesses, guess);
-	return (OK);
-}
-
-/*
 **	Given an existing context, namely:
 **	- remaining_tet:	list of tetrominoes that need placing
 **	- guesses:			list of guesses -- placed tetrominoes
@@ -153,6 +140,7 @@ t_status	place_next_tetromino(t_solver_context *c)
 **	returns a new context in which the next remaining tetromino has been placed.
 **	if the next remaining tetromino cannot be placed, returns NULL
 */
+#include <stdio.h>
 
 t_solver_context	*fork_context(t_solver_context *parent_context)
 {
@@ -160,22 +148,22 @@ t_solver_context	*fork_context(t_solver_context *parent_context)
 	t_solver_context	*forked_context;
 
 	next_guess = new_guess(0, 0, list_get_head(parent_context->remaining_tet));
-	while (parent_context->coord.y < parent_context->sidelength)
+	while (1)
 	{
-		while (parent_context->coord.x < parent_context->sidelength)
+		next_guess->coord = parent_context->coord;
+		if (guess_fits_in_context(next_guess, parent_context))
 		{
-			next_guess->coord = parent_context->coord;
-			if (guess_fits_in_context(next_guess, parent_context))
-			{
-				forked_context = clone_context((const t_solver_context*)parent_context);
-				list_pop_head(forked_context->remaining_tet);
-				list_push_head(forked_context->guesses, next_guess);
-				return (forked_context);
-			}
-			parent_context->coord.x++;
+			printf("Placing %c at %d, %d\n", next_guess->tet->label, next_guess->coord.x, next_guess->coord.y);
+			forked_context = clone_context((const t_solver_context*)parent_context);
+			list_pop_head(forked_context->remaining_tet);
+			list_push_head(forked_context->guesses, next_guess);
+			increment_x_y_coordinates(parent_context);
+			return (forked_context);
 		}
-		parent_context->coord.y++;
+		if (EXHAUSTED == increment_x_y_coordinates(parent_context))
+			break;
 	}
+	free(next_guess);
 	return (NULL);
 }
 
@@ -258,12 +246,13 @@ t_solver_context *naive_solve(t_doubly_linked_list *tet_list)
 	while (1)
 	{
 		context = list_get_head(contexts);
+		print_context(context);
 		if (list_is_empty(context->remaining_tet))
 			return (context);
 		else if ((next_context = fork_context(context)))
 			list_push_head(contexts, next_context);
 		else
-			destroy_context(context);
+			destroy_context(list_pop_head(contexts));
 		
 		if (list_is_empty(contexts))
 		{

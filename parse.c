@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 01:23:32 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 02:38:54 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ static int		get_next_tetromino_from_fd(int fd,
 		return (COMPLETE);
 	if ((new_tet = new_tetromino(*shape_ptr)) == NULL)
 		return (ERROR);
-	list_push_head(tet_list, new_tet);
+	list_push_tail(tet_list, new_tet);
 	return (OK);
 }
 

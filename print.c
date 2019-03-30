@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/25 18:56:31 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 02:39:47 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ void	print_tetrominoes(t_doubly_linked_list *tet_list)
 {
 	t_element_container	*tmp;
 
-	tmp = tet_list->tail;
+	tmp = tet_list->head;
 	while (tmp)
 	{
 		print_tetromino((t_tetromino *)tmp->element);
 		ft_putchar('\n');
-		tmp = tmp->next;
+		tmp = tmp->prev;
 	}
 }
 
@@ -153,10 +153,18 @@ void		print_board(t_board *board, unsigned char sidelength)
 	}
 }
 
+
+#include <stdio.h>
 void		print_context(t_solver_context *context)
 {
 	t_board	*board;
 	
+	printf("context with %zu tet remaining: ", context->remaining_tet->size);
+	for (size_t i = 0; i < context->remaining_tet->size; i++)
+	{
+		printf("%c ", ((t_tetromino *)list_get_index(context->remaining_tet, i))->label);
+	}
+	printf("\n");
 	board = compose_board(context->guesses);
 	print_board(board, context->sidelength);
 }
