@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:16:48 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 21:36:26 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "lib/liblist/liblist.h"
 #include "fillit.h"
 #include <stdlib.h>
-
 
 t_solver_context	*new_context(t_doubly_linked_list *tet_list,
 					t_doubly_linked_list *guesses, unsigned char sidelength)

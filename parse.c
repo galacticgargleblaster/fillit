@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 15:51:40 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 21:52:33 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int		is_tetromino(t_shape *shape)
 
 static int		parse_shape(char *buf, t_shape **shape_ptr)
 {
-	t_shape *shape;
+	t_shape 	*shape;
 	signed char	idx;
 	signed char	shape_idx;
 

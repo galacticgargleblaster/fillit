@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:30:40 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 21:43:13 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define RED "\033[7;31m"
 # define RESET "\033[0m"
 
-const char* const	g_colors[] = {
+const char *const	g_colors[] = {
 	CYAN,
 	YELLOW,
 	MAGENTA,
@@ -38,7 +38,7 @@ const char* const	g_colors[] = {
 	RED,
 };
 
-static const char*	get_color_for_char(unsigned char c)
+static const char	*get_color_for_char(unsigned char c)
 {
 	if (c == '.')
 		return (RESET);
@@ -49,14 +49,15 @@ void				print_context(t_solver_context *context)
 {
 	t_board	*board;
 	size_t	i;
-	
+
 	i = 0;
 	ft_putstr(ft_strjoin("tet remaining: ",
 				ft_itoa((int)context->remaining_tet->size)));
 	ft_putstr("\n");
 	while (i < context->remaining_tet->size)
 	{
-		ft_putchar(((t_tetromino *)list_get_index(context->remaining_tet, i))->label);
+		ft_putchar(((t_tetromino *)
+					list_get_index(context->remaining_tet, i))->label);
 		ft_putchar(' ');
 		i++;
 	}

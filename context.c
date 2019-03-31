@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:13:36 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 21:52:17 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,21 @@
 **	the board boundaries.
 */
 
-static int			guess_fits_in_context(const t_guess *new_guess, const t_solver_context *c)
+static int			guess_fits_in_context(const t_guess *new_guess,
+											const t_solver_context *c)
 {
-	t_element_container	*existing_guesses; 
+	t_element_container	*existing_guesses;
 
 	existing_guesses = c->guesses->tail;
 	if (fits_within_board_of_size(new_guess, c->sidelength))
 	{
 		while (existing_guesses)
 		{
-			if (guesses_intersect((t_guess *)(existing_guesses->element), new_guess))
+			if (guesses_intersect((t_guess *)(existing_guesses->element),
+									new_guess))
 				return (0);
 			existing_guesses = existing_guesses->next;
-		}	
+		}
 		return (1);
 	}
 	return (0);
@@ -82,14 +84,15 @@ t_solver_context	*fork_context(t_solver_context *parent_context)
 		next_guess->coord = parent_context->coord;
 		if (guess_fits_in_context(next_guess, parent_context))
 		{
-			forked_context = clone_context((const t_solver_context*)parent_context);
+			forked_context = clone_context((const t_solver_context*)
+											parent_context);
 			list_pop_head(forked_context->remaining_tet);
 			list_push_head(forked_context->guesses, next_guess);
 			increment_x_y_coordinates(parent_context);
 			return (forked_context);
 		}
 		if (EXHAUSTED == increment_x_y_coordinates(parent_context))
-			break;
+			break ;
 	}
 	free(next_guess);
 	return (NULL);

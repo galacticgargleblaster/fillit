@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:31:09 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 21:35:59 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	print_tetrominoes(t_doubly_linked_list *tet_list)
 
 t_board	*compose_board(t_doubly_linked_list *guess_list)
 {
-	t_board *board;
-	t_guess	*guess;
-	unsigned char i;
-	unsigned char j;
+	t_board			*board;
+	t_guess			*guess;
+	unsigned char	i;
+	unsigned char	j;
 
 	board = new_board();
 	i = 0;
@@ -70,7 +70,7 @@ t_board	*compose_board(t_doubly_linked_list *guess_list)
 		j = 0;
 		while (j < 4)
 		{
-			(*board)[absolute_y(guess, j)][absolute_x(guess, j)] = guess->tet->label;
+			(*board)[abs_y(guess, j)][abs_x(guess, j)] = guess->tet->label;
 			j++;
 		}
 		i++;

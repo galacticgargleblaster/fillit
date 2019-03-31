@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:27:57 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 21:50:38 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,23 @@
 #include "fillit.h"
 #include <stdlib.h>
 
-unsigned char	minimum_board_sidelength_for_n_tetrominoes(size_t n)
+unsigned char			minimum_board_sidelength_for_n_tetrominoes(size_t n)
 {
 	size_t			n_cells;
 	unsigned char	sidelength;
-	
+
 	n_cells = n * 4;
 	sidelength = 2;
 	while (sidelength * sidelength < n_cells)
 		sidelength++;
 	return (sidelength);
+}
+
+static t_solver_context	*new_context_from_tet_list(
+				t_doubly_linked_list *tet_list, unsigned char sidelength)
+{
+	return (new_context(list_copy(tet_list),
+			new_doubly_linked_list(), sidelength));
 }
 
 /*
@@ -48,7 +55,7 @@ unsigned char	minimum_board_sidelength_for_n_tetrominoes(size_t n)
 **	..	..
 **
 **	2: there's no room to place the next tetromino in the 0th context,
-**	so that context is destroyed. 
+**	so that context is destroyed.
 **	.x
 **	..
 **
@@ -81,17 +88,16 @@ unsigned char	minimum_board_sidelength_for_n_tetrominoes(size_t n)
 **	...	...
 */
 
-t_solver_context *naive_solve(t_doubly_linked_list *tet_list)
+t_solver_context		*naive_solve(t_doubly_linked_list *tet_list)
 {
-	t_doubly_linked_list *contexts;
-	t_solver_context	*context;
-	t_solver_context	*next_context;
-	unsigned char	sidelength;
-	
+	t_doubly_linked_list	*contexts;
+	t_solver_context		*context;
+	t_solver_context		*next_context;
+	unsigned char			sidelength;
+
 	sidelength = minimum_board_sidelength_for_n_tetrominoes(tet_list->size);
 	contexts = new_doubly_linked_list();
-	list_push_head(contexts, new_context(list_copy(tet_list),
-					new_doubly_linked_list(), sidelength));
+	list_push_head(contexts, new_context_from_tet_list(tet_list, sidelength));
 	while (1)
 	{
 		context = list_get_head(contexts);
@@ -102,14 +108,11 @@ t_solver_context *naive_solve(t_doubly_linked_list *tet_list)
 			list_push_head(contexts, next_context);
 		else
 			destroy_context(list_pop_head(contexts));
-		
 		if (list_is_empty(contexts))
 		{
 			sidelength++;
-			DEBUG_MESSAGE(ft_strjoin("Growing sidelength to ",
-							ft_itoa(sidelength)));
-			context = new_context(list_copy(tet_list),
-						new_doubly_linked_list(), sidelength);
+			DBG_MSG(ft_strjoin("Growing sidelength to ", ft_itoa(sidelength)));
+			context = new_context_from_tet_list(tet_list, sidelength);
 		}
-	}	
+	}
 }

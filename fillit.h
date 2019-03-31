@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:42 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:30:20 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 21:35:32 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ typedef struct			s_guess
 	t_coordinate	coord;
 }						t_guess;
 
-unsigned char			absolute_x(const t_guess *g, unsigned char i);
-unsigned char			absolute_y(const t_guess *g, unsigned char i);
+unsigned char			abs_x(const t_guess *g, unsigned char i);
+unsigned char			abs_y(const t_guess *g, unsigned char i);
 int						guesses_intersect(const t_guess *a, const t_guess *b);
 int						fits_within_board_of_size(const t_guess *g,
 							unsigned char sidelength);
