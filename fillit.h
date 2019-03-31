@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:42 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 15:50:40 by student          ###   ########.fr       */
+/*   Updated: 2019/03/30 21:30:20 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 
 # include "lib/liblist/liblist.h"
 
-# ifdef DEBUG_MESSAGES
-#  define DMSG(msg) (ft_putstr_fd(ft_strjoin(msg, "\n"), 2))
+# ifdef DEBUG
+#  define DEBUG_MESSAGE(msg) (ft_putstr_fd(ft_strjoin(msg, "\n"), 2))
 #  define PUT_ERR(msg) (ft_putstr_fd(ft_strjoin(msg, "\n"), 2))
+#  define DO_IF_DEBUG(x) (x)
 # else
-#  define DMSG(msg)
+#  define DEBUG_MESSAGE(msg)
 #  define PUT_ERR(msg)
+#  define DO_IF_DEBUG(x)
 # endif
 
 # define RETURN(what, why)({PUT_ERR(why); return (what);})
@@ -95,6 +97,7 @@ unsigned char			absolute_y(const t_guess *g, unsigned char i);
 int						guesses_intersect(const t_guess *a, const t_guess *b);
 int						fits_within_board_of_size(const t_guess *g,
 							unsigned char sidelength);
+void					*copy_guess(void *g_ptr);
 
 /*
 **	parse.c
@@ -114,7 +117,7 @@ t_guess					*new_guess(unsigned char x, unsigned char y,
 t_board					*new_board(void);
 
 /*
-**	solve.c
+**	context.c
 */
 
 /*
@@ -135,6 +138,16 @@ typedef struct			s_solver_context
 	unsigned char			sidelength;
 }						t_solver_context;
 
+t_solver_context		*fork_context(t_solver_context *parent_context);
+t_solver_context		*new_context(t_doubly_linked_list *tet_list,
+					t_doubly_linked_list *guesses, unsigned char sidelength);
+t_solver_context		*clone_context(const t_solver_context *context);
+void					destroy_context(t_solver_context *context);
+
+/*
+**	solve.c
+*/
+
 t_solver_context		*naive_solve(t_doubly_linked_list *tet_list);
 
 /*
@@ -145,5 +158,11 @@ void					print_board(t_board *board, unsigned char sidelength);
 t_board					*compose_board(t_doubly_linked_list *guess_list);
 void					print_tetrominoes(t_doubly_linked_list *tet_list);
 void					print_context(t_solver_context *context);
+
+/*
+**	debug.c
+*/
+
+void					fillit_putchar(char c);
 
 #endif
