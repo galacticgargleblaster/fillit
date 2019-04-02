@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/02 11:03:27 by student          ###   ########.fr       */
+/*   Updated: 2019/04/02 12:04:40 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 
 static inline int	is_adjacent(t_coordinate a, t_coordinate b)
 {
-	return ((ABS(a.x - b.x) == 1) || (ABS(a.y - b.y) == 1));
+	return ((ABS(a.x - b.x) == 1) && ((a.y - b.y) == 0)) ||
+			(((a.x - b.x) == 0) && (ABS(a.y - b.y) == 1));
 }
 
 /*
@@ -94,7 +95,7 @@ static int			parse_shape(char *buf, t_shape **shape_ptr)
 			RETURN(ERROR, "invalid char within shape");
 	}
 	if (shape_idx != 3 || !(is_tetromino(*shape_ptr)))
-		return (ERROR);
+		RETURN(ERROR, "shape is not a tetromino");
 	return (SUCCESS);
 }
 

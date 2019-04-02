@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/02 11:11:14 by student          ###   ########.fr       */
+/*   Updated: 2019/04/02 12:23:52 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_solver_context		*naive_solve(t_doubly_linked_list *tet_list)
 	t_solver_context		*next_context;
 	unsigned char			sidelength;
 
-	sidelength = minimum_board_sidelength_for_n_tetrominoes(tet_list->size);
+	sidelength = minimum_board_sidelength_for_n_tetrominoes(tet_list->size) - 1;
 	contexts = new_doubly_linked_list();
 	while (1)
 	{

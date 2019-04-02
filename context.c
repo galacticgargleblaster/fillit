@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:52:17 by student          ###   ########.fr       */
+/*   Updated: 2019/04/02 12:18:20 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ static int			guess_fits_in_context(const t_guess *new_guess,
 
 t_status			increment_x_y_coordinates(t_solver_context *c)
 {
-	if (c->coord.x < c->sidelength)
+	if (c->coord.y < c->sidelength)
 	{
-		c->coord.x++;
+		c->coord.y++;
 		return (OK);
 	}
-	else if (c->coord.y < c->sidelength)
+	else if (c->coord.x < c->sidelength)
 	{
-		c->coord.x = 0;
-		c->coord.y++;
+		c->coord.y = 0;
+		c->coord.x++;
 		return (OK);
 	}
 	else
