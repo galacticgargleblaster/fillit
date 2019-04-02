@@ -36,9 +36,12 @@ fclean: clean
 	make -C $(LIBLIST_DIR) fclean
 
 re: fclean all
+
+remove_executable:
+	/bin/rm -f $(NAME)
 	
 debug: CFLAGS += -g -DDEBUG -DCOLORS -DDEBUG_MESSAGES
-debug: fclean all
+debug: remove_executable all
 
 tests: test/main.c
 	$(CC) $(CFLAGS) -g $(LINKER_FLAGS) $^ -o test/test_executable

@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/02 09:48:07 by student          ###   ########.fr       */
+/*   Updated: 2019/04/02 11:03:27 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ static int			get_next_tetromino_from_fd(int fd,
 						t_doubly_linked_list *tet_list)
 {
 	char		buf[TETROMINO_FORMAT_N_BYTES];
-	char		c;
 	t_shape		*shape_ptr;
 	ssize_t		read_returned;
 	t_tetromino *new_tet;
@@ -114,12 +113,8 @@ static int			get_next_tetromino_from_fd(int fd,
 		return (COMPLETE);
 	if (read_returned != TETROMINO_FORMAT_N_BYTES)
 		RETURN(ERROR, "read() failed");
-	if ((read(fd, &c, 1) == 1) && c != '\n')
-		RETURN(ERROR, "no separating newline found");
 	if (parse_shape(buf, &shape_ptr) == ERROR)
 		return (ERROR);
-	else if (shape_ptr == NULL)
-		return (COMPLETE);
 	if ((new_tet = new_tetromino(*shape_ptr)) == NULL)
 		return (ERROR);
 	list_push_tail(tet_list, new_tet);
@@ -129,15 +124,24 @@ static int			get_next_tetromino_from_fd(int fd,
 int					read_tetrominoes_from_fd(int fd,
 						t_doubly_linked_list *tet_list)
 {
-	int	status;
+	int		status;
+	char	c;
+	ssize_t separating_nl_exists;
 
+	separating_nl_exists = 0;
 	while (tet_list->size <= MAX_N_TETROMINOES)
 	{
 		status = get_next_tetromino_from_fd(fd, tet_list);
 		if (status == ERROR)
 			return (ERROR);
-		if (status == COMPLETE)
+		if (0 > ((separating_nl_exists = read(fd, &c, 1))))
+			RETURN(ERROR, "failed to read separator char");
+		if ((separating_nl_exists == 1) && c != '\n')
+			RETURN(ERROR, "invalid separator char found between tet");
+		if (status == OK && !separating_nl_exists)
 			break ;
+		else if (status == COMPLETE)
+			RETURN(ERROR, "redundant newlines found at EOF");
 	}
 	if (tet_list->size == 0)
 		RETURN(ERROR, "no tetrominoes found");

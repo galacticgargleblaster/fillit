@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:50:38 by student          ###   ########.fr       */
+/*   Updated: 2019/04/02 11:11:14 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,15 @@ t_solver_context		*naive_solve(t_doubly_linked_list *tet_list)
 
 	sidelength = minimum_board_sidelength_for_n_tetrominoes(tet_list->size);
 	contexts = new_doubly_linked_list();
-	list_push_head(contexts, new_context_from_tet_list(tet_list, sidelength));
 	while (1)
 	{
+		if (list_is_empty(contexts))
+		{
+			sidelength++;
+			DBG_MSG(ft_strjoin("Growing sidelength to ", ft_itoa(sidelength)));
+			list_push_head(contexts,
+							new_context_from_tet_list(tet_list, sidelength));
+		}
 		context = list_get_head(contexts);
 		DO_IF_DEBUG(print_context(context));
 		if (list_is_empty(context->remaining_tet))
@@ -108,11 +114,5 @@ t_solver_context		*naive_solve(t_doubly_linked_list *tet_list)
 			list_push_head(contexts, next_context);
 		else
 			destroy_context(list_pop_head(contexts));
-		if (list_is_empty(contexts))
-		{
-			sidelength++;
-			DBG_MSG(ft_strjoin("Growing sidelength to ", ft_itoa(sidelength)));
-			context = new_context_from_tet_list(tet_list, sidelength);
-		}
 	}
 }
