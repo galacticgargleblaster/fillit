@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/02 12:18:20 by student          ###   ########.fr       */
+/*   Updated: 2019/04/02 14:03:28 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static int			guess_fits_in_context(const t_guess *new_guess,
 	return (0);
 }
 
+#define IN_RANGE(x, y, sid) (((x) < (sid)) && ((y) < (sid)))
+
 /*
 **	If the x, y coordinates of the context have reached the of the board,
 **	the context is considered exhausted
@@ -47,19 +49,22 @@ static int			guess_fits_in_context(const t_guess *new_guess,
 
 t_status			increment_x_y_coordinates(t_solver_context *c)
 {
-	if (c->coord.y < c->sidelength)
+	while (c->coord.x < c->sidelength || c->coord.y < c->sidelength)
 	{
-		c->coord.y++;
-		return (OK);
+		if (c->coord.x == 0)
+		{
+			c->coord.x = c->coord.y + 1;
+			c->coord.y = 0;
+		}
+		else
+		{
+			c->coord.y++;
+			c->coord.x--;
+		}
+		if (IN_RANGE(c->coord.x, c->coord.y, c->sidelength))
+			return (OK);
 	}
-	else if (c->coord.x < c->sidelength)
-	{
-		c->coord.y = 0;
-		c->coord.x++;
-		return (OK);
-	}
-	else
-		return (EXHAUSTED);
+	return (EXHAUSTED);
 }
 
 /*
