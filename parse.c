@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:52:33 by student          ###   ########.fr       */
+/*   Updated: 2019/04/02 09:48:07 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@
 #define IS_VALID_TETROMINO_CHR(c) ((c == EMPTY) || (c == FILLED))
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 
-
 static inline int	is_adjacent(t_coordinate a, t_coordinate b)
 {
 	return ((ABS(a.x - b.x) == 1) || (ABS(a.y - b.y) == 1));
 }
 
 /*
-**	Checks that the set of four coordinates have at least three adjacencies in total
+**	Checks that the set of four coordinates have at least three adjacencies
+**	in total
 */
 
-static int		is_tetromino(t_shape *shape)
+static int			is_tetromino(t_shape *shape)
 {
 	unsigned char	adjacencies;
 	unsigned char	coord_a;
@@ -70,40 +70,36 @@ static int		is_tetromino(t_shape *shape)
 
 #define IS_END_OF_LINE(idx) (idx % 5 == 4)
 
-static int		parse_shape(char *buf, t_shape **shape_ptr)
+static int			parse_shape(char *buf, t_shape **shape_ptr)
 {
-	t_shape 	*shape;
-	signed char	idx;
+	signed char	buf_idx;
 	signed char	shape_idx;
 
-	idx = -1;
+	buf_idx = -1;
 	shape_idx = -1;
-	if ((shape = new_shape()) == NULL)
+	if ((*shape_ptr = new_shape()) == NULL)
 		return (ERROR);
-	while (++idx < TETROMINO_FORMAT_N_BYTES)
+	while (++buf_idx < TETROMINO_FORMAT_N_BYTES)
 	{
-		if (IS_END_OF_LINE(idx) && buf[idx] != '\n')
+		if (IS_END_OF_LINE(buf_idx) && buf[buf_idx] != '\n')
 			RETURN(ERROR, "no newline found at row end");
-		else if (buf[idx] == FILLED)
+		else if (buf[buf_idx] == FILLED)
 		{
 			if (++shape_idx == 4)
 				RETURN(ERROR, "More than 4 points in this shape");
-			(*shape)[shape_idx].x = AS_X_COORD(idx);
-			(*shape)[shape_idx].y = AS_Y_COORD(idx);
+			(**shape_ptr)[shape_idx].x = AS_X_COORD(buf_idx);
+			(**shape_ptr)[shape_idx].y = AS_Y_COORD(buf_idx);
 		}
-		else if (buf[idx] == EMPTY || (IS_END_OF_LINE(idx) && buf[idx] == '\n'))
-			continue ;
-		else
+		else if (buf[buf_idx] != EMPTY && !(IS_END_OF_LINE(buf_idx)))
 			RETURN(ERROR, "invalid char within shape");
 	}
-	if (shape_idx != 3 || !(is_tetromino(shape)))
+	if (shape_idx != 3 || !(is_tetromino(*shape_ptr)))
 		return (ERROR);
-	*shape_ptr = shape;
 	return (SUCCESS);
 }
 
-static int		get_next_tetromino_from_fd(int fd,
-					t_doubly_linked_list *tet_list)
+static int			get_next_tetromino_from_fd(int fd,
+						t_doubly_linked_list *tet_list)
 {
 	char		buf[TETROMINO_FORMAT_N_BYTES];
 	char		c;
@@ -130,7 +126,8 @@ static int		get_next_tetromino_from_fd(int fd,
 	return (OK);
 }
 
-int				read_tetrominoes_from_fd(int fd, t_doubly_linked_list *tet_list)
+int					read_tetrominoes_from_fd(int fd,
+						t_doubly_linked_list *tet_list)
 {
 	int	status;
 

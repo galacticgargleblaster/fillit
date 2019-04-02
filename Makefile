@@ -30,6 +30,7 @@ clean:
 
 fclean: clean
 	/bin/rm -f $(NAME)
+	/bin/rm -rf $(NAME).dSYM
 
 re: fclean all
 	

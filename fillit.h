@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:42 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:35:32 by student          ###   ########.fr       */
+/*   Updated: 2019/04/02 09:38:54 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # include "lib/liblist/liblist.h"
 
 # ifdef DEBUG
-#  define DEBUG_MESSAGE(msg) (ft_putstr_fd(ft_strjoin(msg, "\n"), 2))
+#  define DBG_MSG(msg) (ft_putstr_fd(ft_strjoin(msg, "\n"), 2))
 #  define PUT_ERR(msg) (ft_putstr_fd(ft_strjoin(msg, "\n"), 2))
 #  define DO_IF_DEBUG(x) (x)
 # else
-#  define DEBUG_MESSAGE(msg)
+#  define DBG_MSG(msg)
 #  define PUT_ERR(msg)
 #  define DO_IF_DEBUG(x)
 # endif
