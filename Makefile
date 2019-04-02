@@ -26,11 +26,14 @@ $(NAME): $(SOURCES)
 	$(CC) $(CFLAGS) $(LINKER_FLAGS) $^ -o $@
 
 clean:
-	echo "Nothing to do here"
+	make -C $(LIBFT_DIR) clean
+	make -C $(LIBLIST_DIR) clean
 
 fclean: clean
 	/bin/rm -f $(NAME)
 	/bin/rm -rf $(NAME).dSYM
+	make -C $(LIBFT_DIR) fclean
+	make -C $(LIBLIST_DIR) fclean
 
 re: fclean all
 	
