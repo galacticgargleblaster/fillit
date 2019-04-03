@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:42 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/02 09:38:54 by student          ###   ########.fr       */
+/*   Updated: 2019/04/03 10:06:56 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ t_solver_context		*new_context(t_doubly_linked_list *tet_list,
 					t_doubly_linked_list *guesses, unsigned char sidelength);
 t_solver_context		*clone_context(const t_solver_context *context);
 void					destroy_context(t_solver_context *context);
+int						x_y_coordinate_sum(t_solver_context *context);
 
 /*
 **	solve.c

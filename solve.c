@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/02 12:27:23 by student          ###   ########.fr       */
+/*   Updated: 2019/04/03 10:10:57 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,31 +88,64 @@ static t_solver_context	*new_context_from_tet_list(
 **	...	...
 */
 
-t_solver_context		*naive_solve(t_doubly_linked_list *tet_list)
+void					get_all_solutions_for_sidelength(
+								t_doubly_linked_list *tet_list,
+								t_doubly_linked_list *soln_list,
+								unsigned char sidelength)
 {
 	t_doubly_linked_list	*contexts;
 	t_solver_context		*context;
 	t_solver_context		*next_context;
-	unsigned char			sidelength;
 
-	sidelength = minimum_board_sidelength_for_n_tet(tet_list->size) - 1;
 	contexts = new_doubly_linked_list();
+	list_push_head(contexts, new_context_from_tet_list(tet_list, sidelength));
 	while (1)
 	{
 		if (list_is_empty(contexts))
-		{
-			sidelength++;
-			DBG_MSG(ft_strjoin("Growing sidelength to ", ft_itoa(sidelength)));
-			list_push_head(contexts,
-							new_context_from_tet_list(tet_list, sidelength));
-		}
+			return ;
 		context = list_get_head(contexts);
 		DO_IF_DEBUG(print_context(context));
 		if (list_is_empty(context->remaining_tet))
-			return (context);
+			list_push_head(soln_list, list_pop_head(contexts));
 		else if ((next_context = fork_context(context)))
 			list_push_head(contexts, next_context);
 		else
 			destroy_context(list_pop_head(contexts));
 	}
+}
+
+t_solver_context		*choose_best_solution(t_doubly_linked_list *soln_list)
+{
+	t_solver_context	*solution;
+	t_solver_context	*best_solution;
+
+	DBG_MSG(ft_strjoin(ft_strjoin("Choosing from ",
+			ft_itoa(soln_list->size)), " possible solutions"));
+	best_solution = list_pop_head(soln_list);
+	while (!list_is_empty(soln_list))
+	{
+		solution = list_pop_head(soln_list);
+		if ((x_y_coordinate_sum(solution) < x_y_coordinate_sum(best_solution)))
+		{
+			destroy_context(best_solution);
+			best_solution = solution;
+		}
+	}
+	return (best_solution);
+}
+
+t_solver_context		*naive_solve(t_doubly_linked_list *tet_list)
+{
+	t_doubly_linked_list	*soln_list;
+	unsigned char			sidelength;
+
+	sidelength = minimum_board_sidelength_for_n_tet(tet_list->size) - 1;
+	soln_list = new_doubly_linked_list();
+	while (list_is_empty(soln_list))
+	{
+		sidelength++;
+		DBG_MSG(ft_strjoin("Growing sidelength to ", ft_itoa(sidelength)));
+		get_all_solutions_for_sidelength(tet_list, soln_list, sidelength);
+	}
+	return (choose_best_solution(soln_list));
 }

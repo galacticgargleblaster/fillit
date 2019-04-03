@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/02 14:03:28 by student          ###   ########.fr       */
+/*   Updated: 2019/04/03 10:10:44 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,26 @@ t_solver_context	*fork_context(t_solver_context *parent_context)
 	}
 	free(next_guess);
 	return (NULL);
+}
+
+/*
+**	Accumulates the sum of the x + y coordinates of each guess in
+**	the solver context
+*/
+
+int					x_y_coordinate_sum(t_solver_context *context)
+{
+	t_element_container	*container;
+	t_guess				*guess;
+	int					sum;
+
+	sum = 0;
+	container = context->guesses->tail;
+	while (container)
+	{
+		guess = container->element;
+		sum += guess->coord.x + guess->coord.y;
+		container = container->next;
+	}
+	return (sum);
 }
