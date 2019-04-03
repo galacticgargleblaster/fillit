@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/02 14:03:28 by student          ###   ########.fr       */
+/*   Updated: 2019/04/03 15:26:29 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,16 @@ static int			guess_fits_in_context(const t_guess *new_guess,
 
 t_status			increment_x_y_coordinates(t_solver_context *c)
 {
-	while (c->coord.x < c->sidelength || c->coord.y < c->sidelength)
+	while (c->coord.y < c->sidelength)
 	{
-		if (c->coord.x == 0)
+		while (c->coord.x < c->sidelength)
 		{
-			c->coord.x = c->coord.y + 1;
-			c->coord.y = 0;
-		}
-		else
-		{
-			c->coord.y++;
-			c->coord.x--;
-		}
-		if (IN_RANGE(c->coord.x, c->coord.y, c->sidelength))
+			c->coord.x++;
 			return (OK);
+		}
+		c->coord.y++;
+		c->coord.x = 0;
+		return (OK);
 	}
 	return (EXHAUSTED);
 }
@@ -94,6 +90,8 @@ t_solver_context	*fork_context(t_solver_context *parent_context)
 			list_pop_head(forked_context->remaining_tet);
 			list_push_head(forked_context->guesses, next_guess);
 			increment_x_y_coordinates(parent_context);
+			forked_context->coord.x = 0;
+			forked_context->coord.y = 0;
 			return (forked_context);
 		}
 		if (EXHAUSTED == increment_x_y_coordinates(parent_context))
