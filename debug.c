@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/03/30 21:43:13 by student          ###   ########.fr       */
+/*   Updated: 2019/04/03 10:36:30 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ void				print_context(t_solver_context *context)
 	size_t	i;
 
 	i = 0;
-	ft_putstr(ft_strjoin("tet remaining: ",
-				ft_itoa((int)context->remaining_tet->size)));
-	ft_putstr("\n");
 	while (i < context->remaining_tet->size)
 	{
 		ft_putchar(((t_tetromino *)

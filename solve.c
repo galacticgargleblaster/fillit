@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/03 10:10:57 by student          ###   ########.fr       */
+/*   Updated: 2019/04/03 10:38:17 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,14 @@ t_solver_context		*naive_solve(t_doubly_linked_list *tet_list)
 		DBG_MSG(ft_strjoin("Growing sidelength to ", ft_itoa(sidelength)));
 		get_all_solutions_for_sidelength(tet_list, soln_list, sidelength);
 	}
+	t_element_container *container;
+	container = soln_list->tail;
+	while (container)
+	{
+		DBG_MSG(ft_strjoin("metric: ", ft_itoa(x_y_coordinate_sum(container->element))));
+		print_context(container->element);
+		container = container->next;
+	}
 	return (choose_best_solution(soln_list));
 }
+
