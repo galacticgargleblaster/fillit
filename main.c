@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/02 11:22:59 by student          ###   ########.fr       */
+/*   Updated: 2019/04/03 15:53:54 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,5 @@ int	main(int ac, char **av)
 		DBG_MSG("No solution");
 		EXIT;
 	}
-	(void)ac;
 	return (0);
 }

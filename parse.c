@@ -6,7 +6,7 @@
 /*   By: student <student@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:39:23 by marvin            #+#    #+#             */
-/*   Updated: 2019/04/03 15:38:19 by student          ###   ########.fr       */
+/*   Updated: 2019/04/03 15:49:45 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,8 @@ int					read_tetrominoes_from_fd(int fd,
 		else if (status == COMPLETE)
 			RETURN(ERROR, "redundant newlines found at EOF");
 	}
-	if (tet_list->size == 0)
-		RETURN(ERROR, "no tetrominoes found");
+	if (tet_list->size == 0 || tet_list->size > MAX_N_TETROMINOES)
+		RETURN(ERROR, "number of tetrominoes must be between 0 and 26");
 	else
 		return (COMPLETE);
 }
