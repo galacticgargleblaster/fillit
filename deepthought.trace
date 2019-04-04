@@ -1,0 +1,424 @@
+= Host-specific information ====================================================
+$> hostname; uname -msr
+e1z2r6p1.42.us.org
+Darwin 17.4.0 x86_64
+$> date
+Wed Apr  3 19:27:43 PDT 2019
+$> gcc --version
+Configured with: --prefix=/Library/Developer/CommandLineTools/usr --with-gxx-include-dir=/usr/include/c++/4.2.1
+Apple LLVM version 9.0.0 (clang-900.0.39.2)
+Target: x86_64-apple-darwin17.4.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+$> clang --version
+Apple LLVM version 9.0.0 (clang-900.0.39.2)
+Target: x86_64-apple-darwin17.4.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+= User files collection ========================================================
+Collecting user files from Vogsphere
+Repository URL: intra/2019/activities/fillit/nkirkby
+
+= Git history ==================================================================
+$> git -C /var/folders/f1/mst2g5m950q9m1t175l3xf2r0000gp/T/tmpbtafzz/user log --pretty='%H - %an, %ad : %s'
+dfa2b01acab80cb3fb20df602024a1a05d376711 - nic james, Wed Apr 3 16:24:48 2019 -0700 : returning an error if number of tetrominoes is greater than 26
+edb04760099c733461fcaa037fb75e393930381a - nic james, Wed Apr 3 15:38:53 2019 -0700 : fixing norm error in parse.c
+1c772caf77b7de76436d716989f80ceeeb25c69b - nic james, Wed Apr 3 15:27:37 2019 -0700 : changing x-y coordinate incrementing function to to scan horizontally rather than diagonally
+b2f533ba5e752561d18dc24f88c390d649075b17 - nic james, Tue Apr 2 14:04:16 2019 -0700 : refactoring incrementing function
+4dabf792122a354964311fde56ace15cb23e0b2f - nic james, Tue Apr 2 12:25:24 2019 -0700 : incrementing y-first when making guesses, fixing sidelength initialization
+5203d001a0e5ab5caaf776b157f02ddcd5f34599 - nic james, Tue Apr 2 11:46:37 2019 -0700 : removing author file from libft, removing newline from author file
+e2dd1a0810101ac1e556c926b9638511da36e40d - nic james, Tue Apr 2 11:37:22 2019 -0700 : unsubmoduling the submodules
+7a3a7d892864cb4123c5afcfec4db11dd8ffa067 - nic james, Tue Apr 2 11:29:31 2019 -0700 : removing notes and prior art to satisfy Moulinette
+58a03ffacbe636805930265c88e107a322a34b9a - nic james, Tue Apr 2 11:28:35 2019 -0700 : removing documentation to satisfy 42s unfortunate grading system
+ed3af36025059db1bd2430bab6c22739e55394bc - nic james, Tue Apr 2 11:24:45 2019 -0700 : adding author file, printing usage to stdout if number of params is not 1
+deeb1e0a36f528800aeb6830324e5d435e7c93b9 - nic james, Tue Apr 2 11:15:43 2019 -0700 : pointing to fillit branch of libft with test code removed
+d106a3543d70bb34f43a99aecf942d72605d5b1f - nic james, Tue Apr 2 11:14:17 2019 -0700 : refactoring to detect redundant newline at EOF
+46f35c81dda6b44f22214c34ee8e4cb514e8d7c4 - nic james, Tue Apr 2 09:57:55 2019 -0700 : making clean and fclean rules recursive
+5a94cfda67208b773d399e13f3fefd9de7da35ef - nic james, Tue Apr 2 09:49:02 2019 -0700 : normed
+b7afbdbe9a208a5424296c5d5c8f9728b9f64e8a - nic james, Sat Mar 30 21:53:11 2019 -0700 : very nearly normed
+8c140094c91c1b71a0519069ef6044095f7cb75a - nic james, Sat Mar 30 21:32:53 2019 -0700 : dividing files with too many functions
+418c4d3d6c1cd66550db4ecd3fd3334891ebb70e - nic james, Sat Mar 30 15:55:15 2019 -0700 : partly normed, moving prior art into hidden dir for norm sake
+9f008d22208a794ffaab353e784bd96866c8e8c7 - nic james, Sat Mar 30 03:06:26 2019 -0700 : woohoo.  seems to work
+b4eb51f2700a9015f7090603a47f98c1fa51ef57 - nic james, Sat Mar 30 03:03:49 2019 -0700 : placing tetrominoes seems to work, but board size isn't increasing
+434f95830502e750bee326ffdbae8a45717d2df8 - nic james, Sat Mar 30 01:52:32 2019 -0700 : finished major refactoring to solve iteratively rather than recursively -- segfaults immediately
+d4f8e96edaebe0f07d1143e7c0d6a5565b56cd1c - nic james, Mon Mar 25 20:23:13 2019 -0700 : bumping liblist version to fix copying bug in which copied lists elements are undefined
+dccfbce6277a67e06079187e88724f958e724f62 - nic james, Mon Mar 25 19:41:11 2019 -0700 : iterative solver prototyped, but loops forever
+680984a94cee42beb9e981a5752d0f3f7b294e67 - nic james, Mon Mar 25 16:36:24 2019 -0700 : fixed double increment bug in compose_board
+043808792cc52f6615a05c4313ffc92a541451b3 - nic james, Mon Mar 25 15:08:38 2019 -0700 : solving still not working, although printing of individual tetrominoes is
+fb6ea1587fb821ad2a57518610ca2c8401d57b89 - nic james, Mon Mar 25 00:46:29 2019 -0700 : refactored to use liblist, my opinionated linked-list library
+94fb8a0fa2f025a408305b796f79239d63e4d003 - Nicholas Kirkby, Thu Mar 14 11:21:11 2019 -0700 : adding a totally broken solver
+d62c0cfaf0996579d992a7818a8833afe82e7d86 - Nicholas Kirkby, Tue Mar 12 14:04:45 2019 -0700 : adding submodule checkout instructions
+f563309b3226f716b2257d2c57dad73f806bd34a - Nicholas Kirkby, Tue Mar 12 13:54:03 2019 -0700 : fixing test for overlap detection
+d400e9e8498ac2d33200073b17c5157f3a612cba - Nicholas Kirkby, Tue Mar 12 00:39:44 2019 -0700 : wrote some failing tests for tetromino overlapping
+28249c1aae2830c19a8d9da1c82fc3747ef4724f - Nicholas Kirkby, Mon Mar 11 22:39:08 2019 -0700 : adding primitive test infrastructure
+8fee1885fdf2a2574fe093f863f03c8bc1e9e43f - Nicholas Kirkby, Fri Mar 8 16:27:40 2019 -0800 : fixing a few parsing and printing bugs
+3fc80f64421f471b41a1bade438c10316595050a - Nicholas Kirkby, Fri Mar 8 14:07:44 2019 -0800 : removing include in Makefile, adding a bunch of prototyping
+9f7bab8d3a0bd4cde3ef7fe71676f63a61bc887f - Nicholas Kirkby, Thu Mar 7 18:02:42 2019 -0800 : templating printing and solving files
+15162faf899a6dcd961c28da119e83c3dc783ffd - Nicholas Kirkby, Thu Mar 7 15:38:32 2019 -0800 : reorganizing and norming
+462af8496e4105cb3d68d9a958511e17f410ee77 - Nicholas Kirkby, Thu Mar 7 14:19:17 2019 -0800 : refactoring shape validation functions to return integer error codes
+4c788abb98e2f242bbd457220e4c79d631d496eb - Nicholas Kirkby, Tue Mar 5 17:41:17 2019 -0800 : fixed parsing end-of-line logic
+e75d9dca2a78fe0fdb8c5f2f0c2b26b9457f8b4a - Nicholas Kirkby, Tue Mar 5 17:16:12 2019 -0800 : adding header
+a395af79cac22d0b5587f8fbed9b447bada9ddac - Nicholas Kirkby, Tue Mar 5 17:12:37 2019 -0800 : adding Makefile, compiled binary reads from file but segfaults
+95fb206a06c2b8e88b25dcdd9160091850ef5a62 - Nicholas Kirkby, Tue Mar 5 15:37:24 2019 -0800 : starting a tetromino parsing function
+4ea90f9cd00f354b4e5536d257b9048dcb545aa1 - Nicholas Kirkby, Tue Mar 5 11:50:16 2019 -0800 : adding simple colorization
+0c711947327239493c77f0251af23a546a18dc02 - Nicholas Kirkby, Tue Mar 5 11:15:14 2019 -0800 : adding gitmodules and notes
+c569beb9c29d2a1ba3294cae4f8fb1d56700e240 - Nicholas Kirkby, Tue Mar 5 10:45:58 2019 -0800 : adding libft submodule
+
+= Collected files ==========================================
+$> ls -lAR /var/folders/f1/mst2g5m950q9m1t175l3xf2r0000gp/T/tmpbtafzz/user
+total 184
+-rw-r--r--  1 deepthought  deepthought     21 Apr  3 19:27 .gitignore
+-rw-r--r--  1 deepthought  deepthought   1336 Apr  3 19:27 Makefile
+-rw-r--r--  1 deepthought  deepthought  21145 Apr  3 19:27 __GIT_HISTORY
+-rw-r--r--  1 deepthought  deepthought     16 Apr  3 19:27 author
+-rw-r--r--  1 deepthought  deepthought   1488 Apr  3 19:27 constructors.c
+-rw-r--r--  1 deepthought  deepthought   3171 Apr  3 19:27 context.c
+-rw-r--r--  1 deepthought  deepthought   1751 Apr  3 19:27 context_constructors.c
+-rw-r--r--  1 deepthought  deepthought   2133 Apr  3 19:27 debug.c
+-rw-r--r--  1 deepthought  deepthought   4333 Apr  3 19:27 fillit.h
+-rw-r--r--  1 deepthought  deepthought   1639 Apr  3 19:27 guess.c
+-rw-r--r--  1 deepthought  deepthought   1351 Apr  3 19:27 guess_constructors.c
+drwxr-xr-x  4 deepthought  deepthought    136 Apr  3 19:27 lib
+-rw-r--r--  1 deepthought  deepthought   1673 Apr  3 19:27 main.c
+-rw-r--r--  1 deepthought  deepthought   4592 Apr  3 19:27 parse.c
+-rw-r--r--  1 deepthought  deepthought   2243 Apr  3 19:27 print.c
+-rw-r--r--  1 deepthought  deepthought   3594 Apr  3 19:27 solve.c
+-rw-r--r--  1 deepthought  deepthought   1800 Apr  3 19:27 tetromino.c
+
+/var/folders/f1/mst2g5m950q9m1t175l3xf2r0000gp/T/tmpbtafzz/user/lib:
+total 0
+drwxr-xr-x  60 deepthought  deepthought  2040 Apr  3 19:27 libft
+drwxr-xr-x  10 deepthought  deepthought   340 Apr  3 19:27 liblist
+
+/var/folders/f1/mst2g5m950q9m1t175l3xf2r0000gp/T/tmpbtafzz/user/lib/libft:
+total 456
+-rw-r--r--  1 deepthought  deepthought  2324 Apr  3 19:27 Makefile
+-rw-r--r--  1 deepthought  deepthought  2628 Apr  3 19:27 ft_atoi.c
+-rw-r--r--  1 deepthought  deepthought   990 Apr  3 19:27 ft_bzero.c
+-rw-r--r--  1 deepthought  deepthought   980 Apr  3 19:27 ft_isalnum.c
+-rw-r--r--  1 deepthought  deepthought   961 Apr  3 19:27 ft_isalpha.c
+-rw-r--r--  1 deepthought  deepthought   972 Apr  3 19:27 ft_isascii.c
+-rw-r--r--  1 deepthought  deepthought   961 Apr  3 19:27 ft_isdigit.c
+-rw-r--r--  1 deepthought  deepthought  1168 Apr  3 19:27 ft_isprint.c
+-rw-r--r--  1 deepthought  deepthought  1352 Apr  3 19:27 ft_itoa.c
+-rw-r--r--  1 deepthought  deepthought  2245 Apr  3 19:27 ft_itoa_base.c
+-rw-r--r--  1 deepthought  deepthought  1338 Apr  3 19:27 ft_memalloc.c
+-rw-r--r--  1 deepthought  deepthought  1246 Apr  3 19:27 ft_memccpy.c
+-rw-r--r--  1 deepthought  deepthought  1140 Apr  3 19:27 ft_memchr.c
+-rw-r--r--  1 deepthought  deepthought  1186 Apr  3 19:27 ft_memcmp.c
+-rw-r--r--  1 deepthought  deepthought  1106 Apr  3 19:27 ft_memcpy.c
+-rw-r--r--  1 deepthought  deepthought  1237 Apr  3 19:27 ft_memdel.c
+-rw-r--r--  1 deepthought  deepthought  1414 Apr  3 19:27 ft_memmove.c
+-rw-r--r--  1 deepthought  deepthought  1065 Apr  3 19:27 ft_memset.c
+-rw-r--r--  1 deepthought  deepthought   982 Apr  3 19:27 ft_putchar.c
+-rw-r--r--  1 deepthought  deepthought  1143 Apr  3 19:27 ft_putchar_fd.c
+-rw-r--r--  1 deepthought  deepthought  1107 Apr  3 19:27 ft_putendl.c
+-rw-r--r--  1 deepthought  deepthought  1159 Apr  3 19:27 ft_putendl_fd.c
+-rw-r--r--  1 deepthought  deepthought  1076 Apr  3 19:27 ft_putnbr.c
+-rw-r--r--  1 deepthought  deepthought  1412 Apr  3 19:27 ft_putnbr_fd.c
+-rw-r--r--  1 deepthought  deepthought   965 Apr  3 19:27 ft_putstr.c
+-rw-r--r--  1 deepthought  deepthought  1158 Apr  3 19:27 ft_putstr_fd.c
+-rw-r--r--  1 deepthought  deepthought  2287 Apr  3 19:27 ft_split_whitespaces.c
+-rw-r--r--  1 deepthought  deepthought  1082 Apr  3 19:27 ft_strcat.c
+-rw-r--r--  1 deepthought  deepthought  1084 Apr  3 19:27 ft_strchr.c
+-rw-r--r--  1 deepthought  deepthought  1124 Apr  3 19:27 ft_strclr.c
+-rw-r--r--  1 deepthought  deepthought  1027 Apr  3 19:27 ft_strcmp.c
+-rw-r--r--  1 deepthought  deepthought  1070 Apr  3 19:27 ft_strcpy.c
+-rw-r--r--  1 deepthought  deepthought  1207 Apr  3 19:27 ft_strdel.c
+-rw-r--r--  1 deepthought  deepthought  1076 Apr  3 19:27 ft_strdup.c
+-rw-r--r--  1 deepthought  deepthought  1346 Apr  3 19:27 ft_strequ.c
+-rw-r--r--  1 deepthought  deepthought  1295 Apr  3 19:27 ft_striter.c
+-rw-r--r--  1 deepthought  deepthought  1434 Apr  3 19:27 ft_striteri.c
+-rw-r--r--  1 deepthought  deepthought  1504 Apr  3 19:27 ft_strjoin.c
+-rw-r--r--  1 deepthought  deepthought  1314 Apr  3 19:27 ft_strlcat.c
+-rw-r--r--  1 deepthought  deepthought  1012 Apr  3 19:27 ft_strlen.c
+-rw-r--r--  1 deepthought  deepthought  1575 Apr  3 19:27 ft_strmap.c
+-rw-r--r--  1 deepthought  deepthought  1648 Apr  3 19:27 ft_strmapi.c
+-rw-r--r--  1 deepthought  deepthought  1120 Apr  3 19:27 ft_strncat.c
+-rw-r--r--  1 deepthought  deepthought  1211 Apr  3 19:27 ft_strncmp.c
+-rw-r--r--  1 deepthought  deepthought  1119 Apr  3 19:27 ft_strncpy.c
+-rw-r--r--  1 deepthought  deepthought  1124 Apr  3 19:27 ft_strndup.c
+-rw-r--r--  1 deepthought  deepthought  1361 Apr  3 19:27 ft_strnequ.c
+-rw-r--r--  1 deepthought  deepthought  1329 Apr  3 19:27 ft_strnew.c
+-rw-r--r--  1 deepthought  deepthought  1352 Apr  3 19:27 ft_strnstr.c
+-rw-r--r--  1 deepthought  deepthought  1172 Apr  3 19:27 ft_strrchr.c
+-rw-r--r--  1 deepthought  deepthought  1035 Apr  3 19:27 ft_strstr.c
+-rw-r--r--  1 deepthought  deepthought  1588 Apr  3 19:27 ft_strsub.c
+-rw-r--r--  1 deepthought  deepthought  1933 Apr  3 19:27 ft_strtrim.c
+-rw-r--r--  1 deepthought  deepthought   988 Apr  3 19:27 ft_swap.c
+-rw-r--r--  1 deepthought  deepthought   980 Apr  3 19:27 ft_tolower.c
+-rw-r--r--  1 deepthought  deepthought   980 Apr  3 19:27 ft_toupper.c
+drwxr-xr-x  3 deepthought  deepthought   102 Apr  3 19:27 includes
+-rw-r--r--  1 deepthought  deepthought  3759 Apr  3 19:27 libft.h
+
+/var/folders/f1/mst2g5m950q9m1t175l3xf2r0000gp/T/tmpbtafzz/user/lib/libft/includes:
+total 8
+lrwxr-xr-x  1 deepthought  deepthought  10 Apr  3 19:27 libft.h -> ../libft.h
+
+/var/folders/f1/mst2g5m950q9m1t175l3xf2r0000gp/T/tmpbtafzz/user/lib/liblist:
+total 64
+-rw-r--r--  1 deepthought  deepthought  2287 Apr  3 19:27 Makefile
+-rw-r--r--  1 deepthought  deepthought  1391 Apr  3 19:27 cat_split.c
+-rw-r--r--  1 deepthought  deepthought  1943 Apr  3 19:27 copy.c
+-rw-r--r--  1 deepthought  deepthought  1535 Apr  3 19:27 get.c
+-rw-r--r--  1 deepthought  deepthought   991 Apr  3 19:27 is_empty.c
+-rw-r--r--  1 deepthought  deepthought  3629 Apr  3 19:27 liblist.h
+-rw-r--r--  1 deepthought  deepthought  1696 Apr  3 19:27 new_delete.c
+-rw-r--r--  1 deepthought  deepthought  3045 Apr  3 19:27 push_pop.c
+
+= error_tests ==================================================================
+$> make fclean && make && ls -la fillit
+make -C ./lib/libft clean
+/bin/rm -rf .o
+make -C ./lib/liblist clean
+/bin/rm -rf .o
+/bin/rm -f fillit
+/bin/rm -rf fillit.dSYM
+make -C ./lib/libft fclean
+/bin/rm -rf .o
+/bin/rm -f libft.a
+make -C ./lib/liblist fclean
+/bin/rm -rf .o
+/bin/rm -f liblist.a
+make -C ./lib/libft
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_atoi.c -o .o/ft_atoi.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_bzero.c -o .o/ft_bzero.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isalnum.c -o .o/ft_isalnum.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isalpha.c -o .o/ft_isalpha.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isascii.c -o .o/ft_isascii.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isdigit.c -o .o/ft_isdigit.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isprint.c -o .o/ft_isprint.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_itoa.c -o .o/ft_itoa.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_itoa_base.c -o .o/ft_itoa_base.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memalloc.c -o .o/ft_memalloc.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memccpy.c -o .o/ft_memccpy.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memchr.c -o .o/ft_memchr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memcmp.c -o .o/ft_memcmp.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memcpy.c -o .o/ft_memcpy.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memdel.c -o .o/ft_memdel.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memmove.c -o .o/ft_memmove.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memset.c -o .o/ft_memset.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putchar.c -o .o/ft_putchar.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putchar_fd.c -o .o/ft_putchar_fd.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putendl.c -o .o/ft_putendl.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putendl_fd.c -o .o/ft_putendl_fd.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putnbr.c -o .o/ft_putnbr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putnbr_fd.c -o .o/ft_putnbr_fd.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putstr.c -o .o/ft_putstr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putstr_fd.c -o .o/ft_putstr_fd.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_split_whitespaces.c -o .o/ft_split_whitespaces.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strcat.c -o .o/ft_strcat.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strchr.c -o .o/ft_strchr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strclr.c -o .o/ft_strclr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strcmp.c -o .o/ft_strcmp.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strcpy.c -o .o/ft_strcpy.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strdel.c -o .o/ft_strdel.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strdup.c -o .o/ft_strdup.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strequ.c -o .o/ft_strequ.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_striter.c -o .o/ft_striter.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_striteri.c -o .o/ft_striteri.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strjoin.c -o .o/ft_strjoin.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strlcat.c -o .o/ft_strlcat.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strlen.c -o .o/ft_strlen.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strmap.c -o .o/ft_strmap.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strmapi.c -o .o/ft_strmapi.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strncat.c -o .o/ft_strncat.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strncmp.c -o .o/ft_strncmp.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strncpy.c -o .o/ft_strncpy.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strndup.c -o .o/ft_strndup.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strnequ.c -o .o/ft_strnequ.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strnew.c -o .o/ft_strnew.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strnstr.c -o .o/ft_strnstr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strrchr.c -o .o/ft_strrchr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strstr.c -o .o/ft_strstr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strsub.c -o .o/ft_strsub.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strtrim.c -o .o/ft_strtrim.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_swap.c -o .o/ft_swap.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_tolower.c -o .o/ft_tolower.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_toupper.c -o .o/ft_toupper.o
+ar -r libft.a .o/ft_atoi.o .o/ft_bzero.o .o/ft_isalnum.o .o/ft_isalpha.o .o/ft_isascii.o .o/ft_isdigit.o .o/ft_isprint.o .o/ft_itoa.o .o/ft_itoa_base.o .o/ft_memalloc.o .o/ft_memccpy.o .o/ft_memchr.o .o/ft_memcmp.o .o/ft_memcpy.o .o/ft_memdel.o .o/ft_memmove.o .o/ft_memset.o .o/ft_putchar.o .o/ft_putchar_fd.o .o/ft_putendl.o .o/ft_putendl_fd.o .o/ft_putnbr.o .o/ft_putnbr_fd.o .o/ft_putstr.o .o/ft_putstr_fd.o .o/ft_split_whitespaces.o .o/ft_strcat.o .o/ft_strchr.o .o/ft_strclr.o .o/ft_strcmp.o .o/ft_strcpy.o .o/ft_strdel.o .o/ft_strdup.o .o/ft_strequ.o .o/ft_striter.o .o/ft_striteri.o .o/ft_strjoin.o .o/ft_strlcat.o .o/ft_strlen.o .o/ft_strmap.o .o/ft_strmapi.o .o/ft_strncat.o .o/ft_strncmp.o .o/ft_strncpy.o .o/ft_strndup.o .o/ft_strnequ.o .o/ft_strnew.o .o/ft_strnstr.o .o/ft_strrchr.o .o/ft_strstr.o .o/ft_strsub.o .o/ft_strtrim.o .o/ft_swap.o .o/ft_tolower.o .o/ft_toupper.o
+ar: creating archive libft.a
+make -C ./lib/liblist
+clang -c -Wall -Werror -Wextra -Iliblist.h cat_split.c -o .o/cat_split.o
+clang -c -Wall -Werror -Wextra -Iliblist.h copy.c -o .o/copy.o
+clang -c -Wall -Werror -Wextra -Iliblist.h get.c -o .o/get.o
+clang -c -Wall -Werror -Wextra -Iliblist.h is_empty.c -o .o/is_empty.o
+clang -c -Wall -Werror -Wextra -Iliblist.h new_delete.c -o .o/new_delete.o
+clang -c -Wall -Werror -Wextra -Iliblist.h push_pop.c -o .o/push_pop.o
+ar -r liblist.a .o/cat_split.o .o/copy.o .o/get.o .o/is_empty.o .o/new_delete.o .o/push_pop.o
+ar: creating archive liblist.a
+clang -Wall -Werror -Wextra  -I./lib/libft  -I./lib/liblist  -I. -lft -L./lib/libft -llist -L./lib/liblist constructors.c context.c context_constructors.c debug.c guess.c guess_constructors.c main.c parse.c print.c solve.c tetromino.c -o fillit
+-rwxr-xr-x  1 deepthought  deepthought  19552 Apr  3 19:27 fillit
+
+= Test 1 ===================================================
+$> ./p6jjpabrtjb08si8c4doe0sh test1.prm
+$> diff -U 3 user_output_test1 test1.output | cat -e
+
+Diff OK :D
+= Test 2 ===================================================
+$> ./gbc2p9xjwii9pkpp011y3g2h test2.prm
+$> diff -U 3 user_output_test2 test2.output | cat -e
+
+Diff OK :D
+= Test 3 ===================================================
+$> ./wp2l9isbmiludk7glq1g319y test3.prm
+$> diff -U 3 user_output_test3 test3.output | cat -e
+
+Diff OK :D
+= Test 4 ===================================================
+$> ./sdx154gr0ccfpvf35jwrr0mu test4.prm
+$> diff -U 3 user_output_test4 test4.output | cat -e
+
+Diff OK :D
+= Test 5 ===================================================
+$> ./j412jeuoxr2wx68s0y56de4z test5.prm
+$> diff -U 3 user_output_test5 test5.output | cat -e
+
+Diff OK :D
+= Test 6 ===================================================
+$> ./yjdvm7yhi7ru1qiazjt9z4hc test6.prm
+$> diff -U 3 user_output_test6 test6.output | cat -e
+
+Diff OK :D
+= Test 7 ===================================================
+$> ./k9fdel6tv0sa4pqyo3how6ap test7.prm
+$> diff -U 3 user_output_test7 test7.output | cat -e
+
+Diff OK :D
+= Test 8 ===================================================
+$> ./y6jn03jumb7bzpsewanf2zup test8.prm
+$> diff -U 3 user_output_test8 test8.output | cat -e
+
+Diff OK :D
+= Test 9 ===================================================
+$> ./bcmgw9mmdwhdldtl2lv0nktu test9.prm
+$> diff -U 3 user_output_test9 test9.output | cat -e
+
+Diff OK :D
+All tests OK
+Grade: 20
+
+= basic_tests ==================================================================
+$> make fclean && make && ls -la fillit
+make -C ./lib/libft clean
+/bin/rm -rf .o
+make -C ./lib/liblist clean
+/bin/rm -rf .o
+/bin/rm -f fillit
+/bin/rm -rf fillit.dSYM
+make -C ./lib/libft fclean
+/bin/rm -rf .o
+/bin/rm -f libft.a
+make -C ./lib/liblist fclean
+/bin/rm -rf .o
+/bin/rm -f liblist.a
+make -C ./lib/libft
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_atoi.c -o .o/ft_atoi.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_bzero.c -o .o/ft_bzero.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isalnum.c -o .o/ft_isalnum.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isalpha.c -o .o/ft_isalpha.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isascii.c -o .o/ft_isascii.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isdigit.c -o .o/ft_isdigit.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_isprint.c -o .o/ft_isprint.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_itoa.c -o .o/ft_itoa.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_itoa_base.c -o .o/ft_itoa_base.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memalloc.c -o .o/ft_memalloc.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memccpy.c -o .o/ft_memccpy.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memchr.c -o .o/ft_memchr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memcmp.c -o .o/ft_memcmp.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memcpy.c -o .o/ft_memcpy.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memdel.c -o .o/ft_memdel.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memmove.c -o .o/ft_memmove.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_memset.c -o .o/ft_memset.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putchar.c -o .o/ft_putchar.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putchar_fd.c -o .o/ft_putchar_fd.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putendl.c -o .o/ft_putendl.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putendl_fd.c -o .o/ft_putendl_fd.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putnbr.c -o .o/ft_putnbr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putnbr_fd.c -o .o/ft_putnbr_fd.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putstr.c -o .o/ft_putstr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_putstr_fd.c -o .o/ft_putstr_fd.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_split_whitespaces.c -o .o/ft_split_whitespaces.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strcat.c -o .o/ft_strcat.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strchr.c -o .o/ft_strchr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strclr.c -o .o/ft_strclr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strcmp.c -o .o/ft_strcmp.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strcpy.c -o .o/ft_strcpy.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strdel.c -o .o/ft_strdel.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strdup.c -o .o/ft_strdup.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strequ.c -o .o/ft_strequ.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_striter.c -o .o/ft_striter.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_striteri.c -o .o/ft_striteri.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strjoin.c -o .o/ft_strjoin.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strlcat.c -o .o/ft_strlcat.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strlen.c -o .o/ft_strlen.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strmap.c -o .o/ft_strmap.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strmapi.c -o .o/ft_strmapi.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strncat.c -o .o/ft_strncat.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strncmp.c -o .o/ft_strncmp.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strncpy.c -o .o/ft_strncpy.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strndup.c -o .o/ft_strndup.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strnequ.c -o .o/ft_strnequ.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strnew.c -o .o/ft_strnew.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strnstr.c -o .o/ft_strnstr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strrchr.c -o .o/ft_strrchr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strstr.c -o .o/ft_strstr.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strsub.c -o .o/ft_strsub.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_strtrim.c -o .o/ft_strtrim.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_swap.c -o .o/ft_swap.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_tolower.c -o .o/ft_tolower.o
+clang -c -Wall -Werror -Wextra -Ilibft.h ft_toupper.c -o .o/ft_toupper.o
+ar -r libft.a .o/ft_atoi.o .o/ft_bzero.o .o/ft_isalnum.o .o/ft_isalpha.o .o/ft_isascii.o .o/ft_isdigit.o .o/ft_isprint.o .o/ft_itoa.o .o/ft_itoa_base.o .o/ft_memalloc.o .o/ft_memccpy.o .o/ft_memchr.o .o/ft_memcmp.o .o/ft_memcpy.o .o/ft_memdel.o .o/ft_memmove.o .o/ft_memset.o .o/ft_putchar.o .o/ft_putchar_fd.o .o/ft_putendl.o .o/ft_putendl_fd.o .o/ft_putnbr.o .o/ft_putnbr_fd.o .o/ft_putstr.o .o/ft_putstr_fd.o .o/ft_split_whitespaces.o .o/ft_strcat.o .o/ft_strchr.o .o/ft_strclr.o .o/ft_strcmp.o .o/ft_strcpy.o .o/ft_strdel.o .o/ft_strdup.o .o/ft_strequ.o .o/ft_striter.o .o/ft_striteri.o .o/ft_strjoin.o .o/ft_strlcat.o .o/ft_strlen.o .o/ft_strmap.o .o/ft_strmapi.o .o/ft_strncat.o .o/ft_strncmp.o .o/ft_strncpy.o .o/ft_strndup.o .o/ft_strnequ.o .o/ft_strnew.o .o/ft_strnstr.o .o/ft_strrchr.o .o/ft_strstr.o .o/ft_strsub.o .o/ft_strtrim.o .o/ft_swap.o .o/ft_tolower.o .o/ft_toupper.o
+ar: creating archive libft.a
+make -C ./lib/liblist
+clang -c -Wall -Werror -Wextra -Iliblist.h cat_split.c -o .o/cat_split.o
+clang -c -Wall -Werror -Wextra -Iliblist.h copy.c -o .o/copy.o
+clang -c -Wall -Werror -Wextra -Iliblist.h get.c -o .o/get.o
+clang -c -Wall -Werror -Wextra -Iliblist.h is_empty.c -o .o/is_empty.o
+clang -c -Wall -Werror -Wextra -Iliblist.h new_delete.c -o .o/new_delete.o
+clang -c -Wall -Werror -Wextra -Iliblist.h push_pop.c -o .o/push_pop.o
+ar -r liblist.a .o/cat_split.o .o/copy.o .o/get.o .o/is_empty.o .o/new_delete.o .o/push_pop.o
+ar: creating archive liblist.a
+clang -Wall -Werror -Wextra  -I./lib/libft  -I./lib/liblist  -I. -lft -L./lib/libft -llist -L./lib/liblist constructors.c context.c context_constructors.c debug.c guess.c guess_constructors.c main.c parse.c print.c solve.c tetromino.c -o fillit
+-rwxr-xr-x  1 deepthought  deepthought  19552 Apr  3 19:28 fillit
+
+= Test 1 ===================================================
+$> ./9wex7jhswnjdk5rcjfhe9zw4 test1.prm
+$> diff -U 3 user_output_test1 test1.output | cat -e
+
+Diff OK :D
+= Test 2 ===================================================
+$> ./fsm7iq38uhdmkqg80x7xteim test2.prm
+$> diff -U 3 user_output_test2 test2.output | cat -e
+
+Diff OK :D
+= Test 3 ===================================================
+$> ./a339dz2gmg6cj20y5pvy9cnr test3.prm
+$> diff -U 3 user_output_test3 test3.output | cat -e
+
+Diff OK :D
+= Test 4 ===================================================
+$> ./iez3wftl5lhj3tbe0d99z6d7 test4.prm
+$> diff -U 3 user_output_test4 test4.output | cat -e
+
+Diff OK :D
+= Test 5 ===================================================
+$> ./wh6pn62gnhpg189is9084mm5 test5.prm
+$> diff -U 3 user_output_test5 test5.output | cat -e
+
+Diff OK :D
+= Test 6 ===================================================
+$> ./cnkf3o8avf8dfl0kvheahpxo test6.prm
+$> diff -U 3 user_output_test6 test6.output | cat -e
+
+Diff OK :D
+= Test 7 ===================================================
+$> ./xhj0xpgsfbwo4m2qs1pfqvmh test7.prm
+$> diff -U 3 user_output_test7 test7.output | cat -e
+
+Diff OK :D
+All tests OK
+Grade: 80
+
+= Final grade: 100 =============================================================
